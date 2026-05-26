@@ -11,10 +11,14 @@ productivity/
 └── plugins/    Claude Cowork plugin definitions
 ```
 
+## Getting Started
+
+**New here?** See [SETUP.md](SETUP.md) for a full walkthrough: prerequisites, installation, the two-stage build workflow, agent roles, GEMINI.md setup, safety rules, and quota failover. Designed to be readable by both humans and AI agents — point your AI at this repo and it can follow along.
+
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — required for skills and agents
-- [Antigravity CLI](https://antigravity.dev) (`agy` at `/Users/jeffbeaumont/.local/bin/agy`) — required for Gemini agents (`gemini-builder`, `gemini-researcher`, `gemini-analyst`, `gemini-security-reviewer`)
+- [Antigravity CLI](https://antigravity.dev) (`agy`) — required for Gemini agents (`gemini-builder`, `gemini-researcher`, `gemini-analyst`, `gemini-security-reviewer`)
 - Todoist MCP + Notion MCP — required for CoS and productivity skills
 
 ## Installation
@@ -28,6 +32,8 @@ cp -r skills/ship-check ~/.claude/skills/
 ```bash
 cp agents/*.md ~/.claude/agents/
 ```
+
+Update the `agy` binary path in each agent file to match your system (`which agy`). See [SETUP.md](SETUP.md) for the one-liner.
 
 Each project that uses the Gemini agents needs a `GEMINI.md` in the project root with project context (architecture, stack, conventions). This significantly improves output quality.
 
