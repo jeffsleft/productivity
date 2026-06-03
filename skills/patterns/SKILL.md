@@ -1,3 +1,9 @@
+---
+name: patterns
+description: Fire when analyzing prediction accuracy by pattern tag, running calibration checks, or after each quarterly retrospective
+version: 1.0.0
+---
+
 # /patterns
 
 ## Trigger

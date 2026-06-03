@@ -1,3 +1,9 @@
+---
+name: add-source
+description: Fire when adding a research source to the library, pasting transcripts/reports/articles for extraction and filing to Notion Source Library
+version: 1.0.0
+---
+
 # /add-source
 
 ## Trigger

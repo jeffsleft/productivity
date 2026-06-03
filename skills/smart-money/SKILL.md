@@ -1,3 +1,9 @@
+---
+name: smart-money
+description: Fire when looking up smart money investor holdings, viewing who owns a ticker, updating 13F data, or managing smart money investor tracking
+version: 1.0.0
+---
+
 # /smart-money
 
 ## Trigger

@@ -1,3 +1,9 @@
+---
+name: stress
+description: Fire when stress-testing portfolio against historical crash regimes, running quarterly volatility analysis, or analyzing drawdown scenarios
+version: 1.0.0
+---
+
 # /stress
 
 ## Trigger

@@ -1,3 +1,9 @@
+---
+name: deploy-test
+description: Fire after deploying the investing-insights Modal app or any Modal-hosted application, verifying post-deploy functionality
+version: 1.0.0
+---
+
 # /deploy-test — Post-Deploy Verification & Documentation
 
 Run this skill after every deploy of the investing-insights web app (or any Modal-hosted app).

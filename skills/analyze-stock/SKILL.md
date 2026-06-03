@@ -1,3 +1,9 @@
+---
+name: analyze-stock
+description: Fire when analyzing a single stock ticker, ETF, or fund, including Contrarian Source Gate checks and Risk Cap Gate evaluation
+version: 1.0.0
+---
+
 # /analyze-stock
 
 ## Trigger

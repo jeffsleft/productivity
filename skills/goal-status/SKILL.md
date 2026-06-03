@@ -1,3 +1,9 @@
+---
+name: goal-status
+description: Fire when checking goal tracking, computing required CAGR for financial goals, or flagging underfunded college/retirement targets
+version: 1.0.0
+---
+
 # goal-status skill
 
 ## Purpose

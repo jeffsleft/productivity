@@ -1,3 +1,9 @@
+---
+name: journal
+description: Fire when logging investment trades, recording beliefs, documenting decisions, or capturing trade entry/exit rationale
+version: 1.0.0
+---
+
 # journal skill
 
 ## Purpose

@@ -1,3 +1,9 @@
+---
+name: ceo-score
+description: Fire when scoring CEO/leadership quality, running scorecard on a ticker, evaluating CEO for investing analysis, or during analyze-stock when no current scorecard exists
+version: 1.0.0
+---
+
 # ceo-score skill
 
 ## Purpose

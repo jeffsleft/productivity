@@ -67,6 +67,19 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [publish-to-wordpress](skills/publish-to-wordpress/) | Publish posts to jeffreybeaumont.com via WordPress MCP |
 | [blog-graphic-design](skills/blog-graphic-design/) | Generate graphic design briefs for blog posts |
 
+### Engineering Conventions (on-demand, load when in the domain)
+| Skill | Trigger |
+|-------|---------|
+| [gemini-api-conventions](skills/gemini-api-conventions/) | Gemini API calls, model strategy, rate limits |
+| [scraping-conventions](skills/scraping-conventions/) | Web scraping, ATS fetching, Jina/Firecrawl/curl_cffi |
+| [modal-conventions](skills/modal-conventions/) | Modal functions, deploy safety, secrets, route collisions |
+| [cloudflare-stack-rules](skills/cloudflare-stack-rules/) | Cloudflare Workers/Pages/KV, wrangler.toml |
+| [database-conventions](skills/database-conventions/) | SQLite, Supabase, migrations, schema design |
+| [notion-conventions](skills/notion-conventions/) | Notion REST API, property types, idempotent writes |
+| [python-style](skills/python-style/) | Python code, f-strings, Jinja2, YAML config |
+| [frontend-htmx-conventions](skills/frontend-htmx-conventions/) | HTMX + Jinja2, redirects, partial-href traps |
+| [agent-delegation](skills/agent-delegation/) | Antigravity CLI, two-stage plan/execute, quota failover |
+
 ### Coding & Engineering
 | Skill | Description |
 |-------|-------------|
@@ -108,15 +121,21 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [setup-cowork](skills/setup-cowork/) | Configure Claude Cowork with role-matched plugins |
 | [consolidate-memory](skills/consolidate-memory/) | Merge duplicate memory files, fix stale facts |
 
-### Investing Tool (flat `.md` files — Cowork/context injection)
-| File | Description |
-|------|-------------|
-| [analyze-portfolio.md](skills/analyze-portfolio.md) | Full portfolio analysis |
-| [analyze-stock.md](skills/analyze-stock.md) | Single ticker deep dive |
-| [ceo-score.md](skills/ceo-score.md) | CEO/leadership quality scorecard |
-| [add-source.md](skills/add-source.md) | Add research to Source Library |
-| [smart-money.md](skills/smart-money.md) | Institutional ownership lookup |
-| [goal-status.md](skills/goal-status.md) | Financial goal CAGR tracker |
+### Investing Tool
+| Skill | Description |
+|-------|-------------|
+| [analyze-portfolio](skills/analyze-portfolio/) | Full portfolio analysis |
+| [analyze-stock](skills/analyze-stock/) | Single ticker deep dive |
+| [ceo-score](skills/ceo-score/) | CEO/leadership quality scorecard |
+| [add-source](skills/add-source/) | Add research to Source Library |
+| [smart-money](skills/smart-money/) | Institutional ownership lookup |
+| [goal-status](skills/goal-status/) | Financial goal CAGR tracker |
+| [journal](skills/journal/) | Log investment trades and decisions |
+| [patterns](skills/patterns/) | Market pattern recognition |
+| [retrospective](skills/retrospective/) | Investment retrospective review |
+| [stress](skills/stress/) | Portfolio stress testing |
+| [tax-advisor](skills/tax-advisor/) | Tax-aware investment decisions |
+| [deploy-test](skills/deploy-test/) | Post-deploy test for investing-insights app |
 | [patterns.md](skills/patterns.md) | Calibration and pattern review |
 | [retrospective.md](skills/retrospective.md) | Quarterly portfolio retrospective |
 | [stress.md](skills/stress.md) | Portfolio stress testing |

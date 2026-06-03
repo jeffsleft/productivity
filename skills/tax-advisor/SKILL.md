@@ -1,3 +1,9 @@
+---
+name: tax-advisor
+description: Fire when considering tax-loss harvesting, selling positions, logging 529 contributions, managing wash-sale windows, or optimizing account location
+version: 1.0.0
+---
+
 # /tax-advisor
 
 ## Trigger
@@ -43,7 +49,7 @@ All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion 
    - Unrealized loss amount
    - Earliest safe re-buy date (wash-sale window)
 4. After logging, prompt: "Do you want me to write this to Notion as well?"
-5. If yes → create a page in the Tax Events Notion DB (see Notion Write section below)
+5. If yes → create a page in the Tax Events Notion DB
 
 **TLH decision support to include in chat output:**
 - Is the loss worth harvesting? (STCG losses more valuable — offset ordinary income)
@@ -122,7 +128,7 @@ All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion 
 
 **When to invoke:** User asks which account type is best for a specific holding.
 
-**General rules to apply (from strategy_framework.md account-specific strategy):**
+**General rules to apply:**
 
 | Asset Type | Preferred Account | Reasoning |
 |---|---|---|
@@ -147,7 +153,7 @@ When writing a tax event to Notion, create a page with these mapped fields:
 | Notion Field | Source |
 |---|---|
 | Name | `[TICKER] — [Event Type] — [Date]` (e.g., "GTLB — TLH Candidate — 2026-04-21") |
-| Event Type | Map: tlh_candidate → "TLH Candidate", wash_sale → "Wash Sale", contribution_529 → "529 Contribution", sell_decision → "Sell Decision" |
+| Event Type | tlh_candidate → "TLH Candidate", wash_sale → "Wash Sale", contribution_529 → "529 Contribution", sell_decision → "Sell Decision" |
 | Ticker | ticker |
 | Account | account |
 | Event Date | event_date |

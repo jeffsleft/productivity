@@ -1,3 +1,9 @@
+---
+name: analyze-portfolio
+description: Fire when running full portfolio analysis or subset analysis, batch analyzing multiple tickers, or running portfolio concentration checks
+version: 1.0.0
+---
+
 # /analyze-portfolio
 
 ## Trigger
