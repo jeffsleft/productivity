@@ -1,12 +1,14 @@
 ---
 name: lessons-learned-review
-description: This skill should be used when the user wants to review accumulated lessons across projects and decide what should be promoted to AI_RULES.md or CLAUDE.md as permanent universal rules. Run after /lessons-learned completes, when multiple projects have logged the same class of mistake, or periodically to prune stale rules and surface new ones. Always proposes changes and waits for approval before writing.
-version: 1.0.0
+description: This skill should be used when the user wants to review accumulated lessons across projects and decide what should be promoted to AI_RULES.md, a domain skill, or CLAUDE.md as permanent rules. Run after /lessons-learned completes, when multiple projects have logged the same class of mistake, or periodically to prune stale rules and surface new ones. Always proposes changes and waits for approval before writing.
+version: 1.1.0
 ---
 
 # /lessons-learned-review — Elevate Lessons to Global Rules
 
-Review accumulated lessons across all projects and decide what should be promoted to `AI_RULES.md` (universal coding rules) or `~/.claude/CLAUDE.md` (personal preferences and workflow). Proposes changes — never auto-applies.
+Review accumulated lessons across all projects and decide what should be promoted to a permanent rule location. Proposes changes — never auto-applies.
+
+**Architecture reminder:** `AI_RULES.md` is 93 lines and must stay lean. Domain-specific rules live in their skill (`modal-conventions`, `database-conventions`, etc.), not in AI_RULES. A lesson that would have gone to AI_RULES §3 (Modal) now goes to `modal-conventions/SKILL.md`. AI_RULES only grows when a lesson is truly universal — §0 meta-rules, §4 documentation standards, §7 GitHub conventions, §11 platforms to avoid.
 
 ---
 
@@ -21,10 +23,20 @@ Review accumulated lessons across all projects and decide what should be promote
 ## Step 1 — Load the source files
 
 Read all of the following:
-- `~/Projects/AI_RULES.md` — universal coding rules (the highest-stakes file)
-- `~/.claude/CLAUDE.md` — Jeff's personal profile and preferences
+- `~/Projects/AI_RULES.md` — core rules + Domain Rule Index (93 lines — check the index before routing anything here)
 - `~/Projects/.claude/CLAUDE.md` — workspace-level preferences
 - Every `memory/lessons_learned.md` found across `~/Projects/` (use glob or find)
+
+For any lesson touching a known domain, also read the relevant skill:
+- Modal → `~/.claude/skills/modal-conventions/SKILL.md`
+- SQLite/Supabase → `~/.claude/skills/database-conventions/SKILL.md`
+- Gemini API → `~/.claude/skills/gemini-api-conventions/SKILL.md`
+- Cloudflare → `~/.claude/skills/cloudflare-stack-rules/SKILL.md`
+- Web scraping → `~/.claude/skills/scraping-conventions/SKILL.md`
+- Python → `~/.claude/skills/python-style/SKILL.md`
+- HTMX/frontend → `~/.claude/skills/frontend-htmx-conventions/SKILL.md`
+- Notion → `~/.claude/skills/notion-conventions/SKILL.md`
+- Agent delegation → `~/.claude/skills/agent-delegation/SKILL.md`
 
 ---
 
@@ -32,27 +44,33 @@ Read all of the following:
 
 A lesson is worth promoting to a global rule when **any** of these are true:
 - The same class of mistake has appeared in 2+ projects
-- A root cause reveals an undocumented behavior of a tool, API, or platform Jeff uses universally (Modal, Gemini, Cloudflare, SQLite, GitHub)
+- A root cause reveals an undocumented behavior of a tool, API, or platform Jeff uses universally
 - A reusable pattern from one session would prevent a class of errors in all future projects
-- A workflow mistake (e.g., deploying from a worktree, hard dict access on config YAML) is general enough to affect any project
+- A workflow mistake general enough to affect any project
 
 A lesson is **not** worth promoting when:
 - It's project-specific (a one-off bug in a single schema, for example)
-- It's already documented in `AI_RULES.md` or `CLAUDE.md` — check before proposing
+- It's already documented in AI_RULES, a domain skill, or CLAUDE.md — check before proposing
 - It's a symptom fix, not a root cause fix ("run this command" vs. "never do this pattern")
 
 ---
 
-## Step 3 — Categorize each candidate
+## Step 3 — Route each candidate to the right home
 
-For each promotion candidate, classify it:
+**This is the critical step.** Before proposing a change, ask: does a domain skill already own this?
 
-| Target file | When to use it |
+| Target | When to use it |
 |---|---|
-| `AI_RULES.md` | Universal coding rule — applies to every project, every agent, every language |
-| `~/.claude/CLAUDE.md` | Jeff's personal workflow preference or standing permission |
-| Project `CLAUDE.md` | Project-specific gotcha — only relevant to one codebase |
-| No action | Pattern is already covered, or too narrow to generalize |
+| Domain skill (`modal-conventions`, `database-conventions`, etc.) | Lesson involves a specific platform or tool listed in the Domain Rule Index — **this is the default for most technical lessons** |
+| `AI_RULES.md` §0 | Meta-rule about how the three-layer model works |
+| `AI_RULES.md` §4 | Documentation standard, project file structure, outcome workflow |
+| `AI_RULES.md` §7 | GitHub convention (commit format, repo naming, secrets) |
+| `AI_RULES.md` §11 | Platform to avoid (Flask, VPS, heavy ORM) |
+| `~/Projects/.claude/CLAUDE.md` | Jeff's personal workflow preference, standing permission, or proactive behavior |
+| Project `CLAUDE.md` | Gotcha only relevant to one specific codebase |
+| No action | Already covered, too narrow to generalize, or symptom-only |
+
+**AI_RULES.md only grows if the rule is cross-domain and fits one of the four sections above.** If it fits a domain skill, it goes there — not AI_RULES. A Modal guardrail is not a "universal coding rule"; it's a Modal rule. One rule, one home.
 
 ---
 
@@ -62,7 +80,7 @@ For each promotion candidate, produce a proposed edit in this format:
 
 ```
 ### Proposed change [n]
-Target: AI_RULES.md §[section] / CLAUDE.md / [project]/CLAUDE.md
+Target: [domain-skill/SKILL.md] OR [AI_RULES.md §section] OR [CLAUDE.md section]
 Type: New rule / Addition to existing rule / Correction
 
 Current text (if modifying existing):
@@ -71,7 +89,7 @@ Current text (if modifying existing):
 Proposed text:
 > [replacement or addition]
 
-Rationale: [1-2 sentences — which lesson prompted this, and why it's general enough to live here]
+Rationale: [1-2 sentences — which lesson prompted this, why it's general enough to live here, and why AI_RULES is NOT the right home if routing to a skill]
 Source: [project/memory/lessons_learned.md, date]
 ```
 
@@ -91,19 +109,25 @@ Do **not** write to any file until Jeff approves. Apply approved changes one at 
 
 For each applied change:
 - Confirm the file was updated
+- If a domain skill was updated, also deploy: `cp ~/Projects/productivity/skills/<name>/SKILL.md ~/.claude/skills/<name>/SKILL.md`
 - Note what was elevated in `memory/rules_changelog.md` (create if missing) with: date, source lesson, target file, one-line summary of the change
 
 ---
 
-## Style rules for global rule additions
+## Style rules
 
-When writing new content for `AI_RULES.md`:
-- Match the existing section's voice — imperative, direct, technically precise
-- Lead with the rule itself, then the mechanism, then any diagnostic/recovery steps
-- No "why this matters" throat-clearing — the rule body is the justification
-- Reference the specific file/function/platform where relevant
+**Writing into a domain skill:**
+- Match the existing skill's voice — imperative, direct, technically precise
+- Add under the most relevant existing section; don't create new top-level sections without reason
+- Keep guardrails verbatim from the lesson — do not summarize them
+- Lead with the rule, then the mechanism, then diagnostic/recovery steps
 
-When writing for `CLAUDE.md`:
-- Keep it concise — this file is read at session start for every project
-- Proactive behavior permissions and standing preferences go under the right section
+**Writing into `AI_RULES.md`:**
+- Only §0, §4, §7, §11 are valid targets — if the rule doesn't fit one of these, it belongs in a skill
+- Keep the core lean: a new entry in AI_RULES that could live in a skill is a drift violation
+- Match existing section voice — imperative, no throat-clearing
+
+**Writing into `CLAUDE.md`:**
+- Keep it concise — read at session start for every project
+- Proactive behavior permissions go under "Proactive Behavior Permissions"
 - New skills or tools go in the "Connected Tools & MCP Inventory" table
