@@ -129,4 +129,23 @@ Use **Sonnet 4.6** for all three parts in one session. Part 1's `description:` w
 - [x] Part 3 — eval doc (`skills/_evals/rules-refactor-eval.md`)
 - [x] Deploy to `~/.claude/skills/` + all 21 skills registered
 - [x] Verified by gemini-researcher — all 4 checks PASS
-- [ ] Delete flat .md files (pending Jeff confirmation — 12 investing .md files in `skills/` root)
+- [x] Delete flat .md files (verified 2026-06-09 — no flat .md files remain in `skills/` root)
+
+---
+
+## Source Reference — cwc-workshops
+
+**Repo:** `github.com/anthropics/cwc-workshops` (799 stars, Apache 2.0, "Code with Claude" workshop series)
+
+**Relevant workshop:** `agent-decomposition` — the direct inspiration for this refactor.
+
+**Workshop villain:** monolithic ~400-line always-loaded prompt with task-specific rules. Jeff's equivalent was 618 lines (AI_RULES 261 + CLAUDE.md 357) loaded into every session including CoS/blog/finance sessions that had no use for Modal/SQLite/Cloudflare guardrails.
+
+**Alignment confirmed:**
+- Decompose monolithic context → on-demand skills ✓
+- Evals at the boundaries (does the right skill fire?) ✓
+- Progressive disclosure (core = index + pointers; domain = skill body) ✓
+
+**Gap (noted, not a blocker):** The workshop uses Claude Managed Agents with `callable_agents`. Jeff's architecture uses Claude Code skills (different runtime). Same decomposition principle applies; the trigger mechanism is skill `description:` rather than an explicit callable registry.
+
+**Loop-closer:** `lessons-learned-review` v1.1.0 (updated 2026-06-03) now routes domain lessons to their owning skill rather than back into AI_RULES. This is the mechanism that prevents future sessions from re-bloating AI_RULES through the lessons workflow. Without this fix, the refactor would have drifted back within a few sessions.
