@@ -53,7 +53,7 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [internal-writing](skills/internal-writing/) | Mercy Ships / leadership internal communication standards |
 | [article-rewrite](skills/article-rewrite/) | Rewrite generic drafts with specific voice |
 | [seo-aeo-audit](skills/seo-aeo-audit/) | SEO and AEO audit for blog content |
-| [story-brand](skills/story-brand/) | StoryBrand framework for messaging and positioning |
+| [storybrand](skills/storybrand/) | StoryBrand framework for messaging and positioning |
 | [voice-engine](skills/voice-engine/) | Extract and codify a personal writing voice |
 
 ### Document Production
@@ -98,19 +98,20 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [caveman](skills/caveman/) | Simplify complex concepts to plain language |
 
 ### Productivity & Chief of Staff
+
+> **The six CoS skills work as a set.** Start with the
+> **[Chief of Staff plugin README](plugins/chief-of-staff/)** — it explains the sequence,
+> what it requires, and whether it's a fit before you install anything.
+
 | Skill | Description |
 |-------|-------------|
-| [cos-sync](skills/cos-sync/) | Full 3-phase Chief of Staff session orchestrator |
-| [cos-sync-friday](skills/cos-sync-friday/) | Friday CoS review |
-| [friday-cos-review](skills/friday-cos-review/) | Weekly Friday output: CoS review + Happy Friday email |
-| [execution-shadow](skills/execution-shadow/) | Shadow execution of a task or session plan |
-| [weekly-review](skills/weekly-review/) | Full weekly review across Todoist, Notes, and projects |
+| [cos-sync](skills/cos-sync/) | Orchestrator — runs the full CoS session in sequence |
+| [walk-and-talk-interviewer](skills/walk-and-talk-interviewer/) | Phase 1 — voice interview that turns vague tasks into clear ones |
+| [todoist-organizer](skills/todoist-organizer/) | Phase 2 — audit, prioritize, and tag tasks by AI leverage |
+| [execution-shadow](skills/execution-shadow/) | Phase 3 — work the 🤖 Claude-Ready queue |
+| [decision-accountability](skills/decision-accountability/) | Standing — surface decisions that were made and then abandoned |
+| [weekly-review](skills/weekly-review/) | Weekly strategic pass across Todoist, Notes, and the project sheet |
 | [wins-rollup](skills/wins-rollup/) | Monthly wins synthesis across all active projects |
-| [todoist-cli](skills/todoist-cli/) | Todoist task management from Claude Code |
-| [todoist-organizer](skills/todoist-organizer/) | Audit and reorganize a Todoist project |
-| [weekly-ai-chat-review](skills/weekly-ai-chat-review/) | Review open AI chats for Todoist follow-ups |
-| [glm-wednesday-email-draft](skills/glm-wednesday-email-draft/) | Draft the weekly GLM Finance email |
-| [ca-move-pulse](skills/ca-move-pulse/) | California move logistics tracker |
 
 ### Project & Memory Management
 | Skill | Description |
@@ -121,27 +122,16 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [setup-cowork](skills/setup-cowork/) | Configure Claude Cowork with role-matched plugins |
 | [consolidate-memory](skills/consolidate-memory/) | Merge duplicate memory files, fix stale facts |
 
-### Investing Tool
+### Investing Tool — archived
+
+The eleven investing skills (`analyze-portfolio`, `analyze-stock`, `ceo-score`,
+`add-source`, `smart-money`, `goal-status`, `journal`, `patterns`, `retrospective`,
+`stress`, `tax-advisor`) moved to [`skills/_archive/`](skills/_archive/) on 2026-08-20.
+They are kept for reference and are not maintained.
+
 | Skill | Description |
 |-------|-------------|
-| [analyze-portfolio](skills/analyze-portfolio/) | Full portfolio analysis |
-| [analyze-stock](skills/analyze-stock/) | Single ticker deep dive |
-| [ceo-score](skills/ceo-score/) | CEO/leadership quality scorecard |
-| [add-source](skills/add-source/) | Add research to Source Library |
-| [smart-money](skills/smart-money/) | Institutional ownership lookup |
-| [goal-status](skills/goal-status/) | Financial goal CAGR tracker |
-| [journal](skills/journal/) | Log investment trades and decisions |
-| [patterns](skills/patterns/) | Market pattern recognition |
-| [retrospective](skills/retrospective/) | Investment retrospective review |
-| [stress](skills/stress/) | Portfolio stress testing |
-| [tax-advisor](skills/tax-advisor/) | Tax-aware investment decisions |
-| [deploy-test](skills/deploy-test/) | Post-deploy test for investing-insights app |
-| [patterns.md](skills/patterns.md) | Calibration and pattern review |
-| [retrospective.md](skills/retrospective.md) | Quarterly portfolio retrospective |
-| [stress.md](skills/stress.md) | Portfolio stress testing |
-| [tax-advisor.md](skills/tax-advisor.md) | Tax-loss harvesting and tax event analysis |
-| [journal.md](skills/journal.md) | Investment decision journaling |
-| [deploy-test.md](skills/deploy-test.md) | Post-deploy verification for investing app |
+| [deploy-test](skills/deploy-test/) | Post-deploy test for the investing-insights app (still active) |
 
 ---
 

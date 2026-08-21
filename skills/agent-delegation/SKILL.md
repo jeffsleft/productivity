@@ -62,6 +62,10 @@ Never use `--dangerously-skip-permissions` for read-only tasks.
 ## Context delivery
 - Use `--add-dir` to give Antigravity project context — do not pipe raw file contents via stdin.
 - For inline single-file content: embed in the prompt string via `$(cat file.py)` — cap at ~30k chars.
+- **`--add-dir` does not set the write target.** Told to create a file "in this directory" while `--add-dir` points elsewhere, `agy` will silently write to its own internal `~/.gemini/antigravity-cli/scratch/` folder instead — no error, no indication. Always give `agy` an absolute path when it needs to edit a specific file; never rely on `--add-dir` + a relative path.
+
+## Debugging a stalled or slow run
+- **Never pipe a backgrounded `agy` command through `tail`.** `tail` buffers all input and only prints once the underlying process exits, so a `| tail -N` on a long `agy` run makes a normal-but-slow response look hung for its entire duration. If you need to inspect progress, read the raw output file directly instead of piping through `tail`.
 
 ## Subagent role mapping
 | Role | agy flags | Notes |

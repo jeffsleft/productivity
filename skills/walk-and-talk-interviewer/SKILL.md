@@ -5,7 +5,7 @@ description: >
 ---
 
 # Walk & Talk Interviewer
-### Version 1.2 — May 2026
+### Version 1.3 — July 2026
 ### Part of: CoS Plugin
 ### Platform: Claude Cowork + Todoist MCP + Apple Notes MCP
 
@@ -31,10 +31,10 @@ Both modes produce the same output: clarified Todoist tasks with updated descrip
 | Constant | Value |
 |----------|-------|
 | Apple Notes folder for transcripts | `Professional Development → Voice Memo Reflections → Walk & Talk` |
-| Jeff's Todoist UID | `14075501` |
+| Jeff's Todoist UID | `[YOUR_TODOIST_UID]` |
 | Stall threshold (days without activity) | 14 days |
 | Max tasks to interview in one Walk & Talk session | 10 (to keep the walk under 30 min) |
-| Workspace report path | `/Users/jeffbeaumont/Projects/Professional Development/cos-plugin/reports/` |
+| Workspace report path | `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/` |
 
 ---
 
@@ -137,33 +137,35 @@ For each flagged task, generate 2–4 targeted questions. The goal is to extract
 
 ### Walk & Talk batch format
 
-Compile all questions into one numbered interview script. Group by task. Include the AI leverage label for each task so Jeff knows what to expect when he gets back. Format for reading aloud:
+Compile all questions into one numbered interview script. Group by task. Include the AI leverage label for each task so Jeff knows what to expect when he gets back.
 
-```
-Walk & Talk Interview — [DATE]
-[N] tasks, ~[N×3] minutes
+**The script is written to Apple Notes and read off an iPhone on a walk. It MUST be authored as HTML — see `## Apple Notes Formatting` below. Never write plain text with ASCII dividers (`===`, `---`) or ALL-CAPS pseudo-headers into an Apple Note; Apple Notes is a rich-text surface and that output is unreadable on a phone.**
 
----
+Format:
 
-TASK 1: "[Task name]" (Project: [Project]) — 🤖 Claude can lead
-One sentence on why this is flagged (vague, overdue, upcoming, etc.)
-Q1: [Most clarifying question — e.g., "What direction do you want to go on this?"]
-Q2: [Secondary question if needed]
+```html
+<h1>Walk &amp; Talk — [TOPIC]</h1>
+<p style="font-size: 18px"><b>[DATE] · [N] tasks · ~[N×3] min</b></p>
+<p style="font-size: 18px">Answer out loud, in order if you can. Skip freely — just say the number.</p>
 
----
+<h2>1. [Task name] — 🤖 Claude can lead</h2>
+<p style="font-size: 18px"><i>Flagged because: [one sentence — vague, overdue, upcoming, stalled].</i></p>
+<p style="font-size: 18px"><b>Q1.</b> [Most clarifying question]</p>
+<p style="font-size: 18px"><b>Q2.</b> [Secondary question if needed]</p>
 
-TASK 2: "[Task name]" (Project: [Project]) — 👤 Jeff must lead
-One sentence on why this is flagged.
-Q1: [Question targeting the blocker or decision]
-Q2: [Question]
-Q3: [Question if needed]
-
-...
+<h2>2. [Task name] — 👤 Jeff must lead</h2>
+<p style="font-size: 18px"><i>Flagged because: [one sentence].</i></p>
+<p style="font-size: 18px"><b>Q1.</b> [Question targeting the blocker or decision]</p>
+<p style="font-size: 18px"><b>Q2.</b> [Question]</p>
 ```
 
 **For 🤖 Claude can lead tasks:** Keep questions short and directional. Jeff only needs to answer "what outcome do you want?" — Claude will handle the rest after the walk.
 
-**Tell Jeff:** "Here's your interview script. Record yourself walking through these on Voice Memos, save the transcript to Apple Notes (`Professional Development → Voice Memo Reflections → Walk & Talk`), then come back and paste it here — or just say 'I saved the transcript' and I'll pull it."
+**Recommended answers.** When the session is a decision or strategy grill rather than task clarification, follow every question with an italic `<p><i>My take:</i> …</p>` line giving Claude's recommended answer. Jeff can then agree, disagree, or push back instead of generating from scratch — far higher yield per minute of walking. (This mirrors `grill-with-docs`, which requires a recommended answer per question.)
+
+**Write the note, then tell Jeff:** create the note directly via Apple Notes MCP in `Professional Development → Voice Memo Reflections → Walk & Talk`, then say: "Question set is in Apple Notes under [note name]. Record your answers on Voice Memos, drop the transcript in that same note, then come back and paste it here — or just say 'I saved the transcript' and I'll pull it."
+
+**Cap note length.** If a set exceeds ~30 questions, split into two notes (`— Part 2` or `— Block [X]`) and cross-link them with a closing line. Long single notes are hard to scroll while walking.
 
 ### In-Session mode
 
@@ -261,7 +263,7 @@ Follow-up needed: [N] (list them if any)
 ```
 
 Save the summary as a markdown file:
-**Path:** `/Users/jeffbeaumont/Projects/Professional Development/cos-plugin/reports/walk-talk-YYYY-MM-DD.md`
+**Path:** `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/walk-talk-YYYY-MM-DD.md`
 
 Confirm path to Jeff after saving.
 
@@ -285,6 +287,59 @@ If the Apple Notes MCP is not connected or the folder is empty, ask Jeff to past
 
 ---
 
+## Apple Notes Formatting
+
+**Rule: every note this skill writes is authored in HTML. No exceptions.**
+
+Apple Notes is a rich-text surface. The `add_note` / `update_note_content` MCP tools accept HTML in the `content` / `new_content` field and Apple Notes renders it as native styled text. Writing plain text with ASCII dividers and ALL-CAPS headers produces a wall of undifferentiated 11px text that is genuinely hard to read on a phone mid-walk — which defeats the purpose of the skill.
+
+### Verified tag support (tested 2026-07-28, macOS Apple Notes via apple-notes MCP)
+
+| Tag | Result | Use for |
+|-----|--------|---------|
+| `<h1>` | Apple Notes **Title** — 21px bold | Note title line |
+| `<h2>` | Apple Notes **Heading** — 15px bold | Section / block headers |
+| `<p style="font-size: 18px">` | **15px plain — USE THIS FOR ALL BODY TEXT** | Every question and answer line |
+| `<b>` | Bold | Question numbers, key terms, emphasis |
+| `<i>` | Italic | "My take:" recommendations, flag reasons |
+| `<u>` | Underline | Rare — avoid, reads as a link |
+| `<ul><li>` | Proper bullet list | Option lists, sub-points |
+| `<p>` | 11px — **too small to read on a phone** | Don't use bare `<p>` for body |
+
+### Font sizing — the one that bit us (2026-07-28)
+
+Apple Notes **snaps all text to three presets: 21px / 15px / 11px.** It does not honor arbitrary sizes, and it silently discards most sizing markup:
+
+| Written | Rendered |
+|---|---|
+| `<p>text</p>` | 11px — Apple Notes "Body", too small |
+| `<span style="font-size: 14px">` | **11px — style ignored** |
+| `<div style="font-size: 16px">` | **11px — style ignored** |
+| `<font size="4">` | **11px — ignored** |
+| `<p style="font-size: 18px">` | **15px — works** ✓ |
+
+Only an inline `style` on the `<p>` itself is honored, and it snaps to the nearest preset. **Default every body paragraph to `<p style="font-size: 18px">`.** Bare `<p>` renders at 11px, which Jeff has explicitly flagged as too small to read while walking. Headings stay distinguishable because `<h2>` is 15px *bold* while body is 15px plain.
+
+### Does NOT work — known failures
+
+- **`<ol>` silently collapses to an unordered bullet list.** The numbers are discarded with no error. **Always hardcode numbering into the text** (`<p><b>7.</b> Question…</p>`), never rely on `<ol>`.
+- **`<hr>` does not render a divider.** It becomes an empty gray line. Use an `<h2>` to break sections instead.
+- Do not wrap the whole note in `<html>` or `<body>` tags.
+- Escape literal ampersands as `&amp;` (e.g., `Walk &amp; Talk`).
+
+### Anti-patterns
+
+- ✗ ASCII dividers: `===`, `---`, `***`
+- ✗ ALL-CAPS lines used as headers
+- ✗ Markdown syntax (`##`, `**bold**`, `- bullet`) — Apple Notes renders these as literal characters
+- ✓ Real `<h1>` / `<h2>` / `<b>` / `<ul>`
+
+### Verify after writing
+
+After creating or updating a note, call `get_note_content` on it once and confirm the returned markup contains `<b>`, `<span style="font-size: 21px">`, or `<ul>` — not a single undifferentiated `<div>` block. If it came back flat, the content was sent as plain text; rewrite it.
+
+---
+
 ## Todoist Write Rules
 
 These apply any time this skill writes back to Todoist:
@@ -293,20 +348,22 @@ These apply any time this skill writes back to Todoist:
 - Subtasks should be concrete single actions, not categories (✓ "Email vendor for quote" not ✗ "Vendor outreach")
 - Keep descriptions under 200 words — this is a task manager, not a doc
 - Don't add due dates unless Jeff explicitly gave one during the interview
-- If a task is in a shared project with Jaclyn, flag any updates that affect her ownership before writing
+- If a task is in a shared project with [PARTNER], flag any updates that affect her ownership before writing
 
 ---
 
 ## Integration Notes
 
 - **`weekly-review` skill:** The Walk & Talk Interviewer complements the weekly review. Run it when the weekly review surfaces a cluster of unclear tasks.
-- **`ca-move-pulse` skill:** If Auburn move tasks come up in the interview, route their updates through this skill's write-back step — no need to run `ca-move-pulse` separately.
+- **Auburn move tasks:** If Auburn move items come up in the interview, handle them through this skill's normal write-back step. (The standalone `ca-move-pulse` skill was retired 2026-08-19.)
 - **`grill-me` skill:** For a single high-stakes task or project that needs deep stress-testing (not just clarification), use `/grill-me` instead. Walk & Talk is for breadth across many tasks; grill-me is for depth on one.
 
 ---
 
-## Known Limitations (May 2026)
+## Known Limitations (updated July 2026)
 
+- **Apple Notes `<ol>` numbering is lost.** Ordered lists render as bullets. Hardcode numbers in the text. See `## Apple Notes Formatting`.
+- **No delete tool in the Apple Notes MCP.** Notes created in error must be deleted by Jeff by hand — so don't create scratch/test notes in the `Walk & Talk` folder without telling him.
 - **No last-activity timestamps from Todoist MCP:** Stall detection uses creation date as a proxy. Tasks created long ago but actively worked on may be incorrectly flagged. Jeff can dismiss these during the interview.
 - **Apple Notes MCP date filtering:** Pull notes modified in the last 24 hours to find the most recent transcript. If Jeff has multiple Walk & Talk notes, ask which one to use.
 - **Voice transcription accuracy:** Apple's built-in transcription is good but not perfect. If a key answer is garbled, flag it rather than guessing.
@@ -336,3 +393,4 @@ Run this skill when Jeff says any of:
 | 2026-05-19 | v1.0 — created in Claude Cowork. First skill in the CoS daily-operations layer. |
 | 2026-05-19 | v1.1 — added 10-day upcoming window; added AI Leverage Assessment (🤖/🤝/👤 labels); Track 1/2 split in Step 4 so Claude-led tasks get immediate action after walk; updated session summary format. |
 | 2026-05-19 | v1.2 — clarified full Walk & Talk flow (Todoist + Apple Notes read before generating questions); added Apple Notes pull to Step 2; added Organizer handoff block at end of Step 5; corrected mode detection logic. |
+| 2026-07-28 | v1.3 — **Apple Notes formatting fixed.** Root cause: Step 3's batch format specified a plain-text code block, so walk scripts were written as ASCII-divider walls of 11px text, unreadable on a phone. Added a full `## Apple Notes Formatting` section with verified tag support (`<h1>`/`<h2>`/`<b>`/`<i>`/`<ul>` work; `<ol>` silently collapses to bullets; `<hr>` renders as a blank line), anti-patterns, and a `get_note_content` verify step. Font sizing: Apple Notes snaps to 21/15/11px presets and ignores `<span>`/`<div>`/`<font>` sizing entirely — only `<p style="font-size: 18px">` produces readable 15px body text; bare `<p>` renders at 11px, which Jeff flagged as unreadable on a phone. Rewrote the Step 3 batch format as HTML. Added the "recommended answer" (`My take:`) convention for decision/strategy grills, borrowed from `grill-with-docs`. Added a 30-question note-split cap. Added two Known Limitations (no `<ol>` numbering, no Apple Notes delete tool). |

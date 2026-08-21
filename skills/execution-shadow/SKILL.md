@@ -34,12 +34,12 @@ The Execution Shadow is the "doer" in the 3-phase CoS system. After Walk & Talk 
 
 | Constant | Value |
 |----------|-------|
-| Jeff's Todoist UID | `14075501` |
-| Jaclyn's Todoist UID | `16889336` — never touch |
+| Jeff's Todoist UID | `[YOUR_TODOIST_UID]` |
+| [PARTNER]'s Todoist UID | `[PARTNER_TODOIST_UID]` — never touch |
 | Max Todoist description length | ~200 words (1–2 sentences for summaries; full prompt text is the exception for Claude Code prompts) |
-| Report path | `/Users/jeffbeaumont/Projects/Professional Development/cos-plugin/reports/execution-shadow-YYYY-MM-DD.md` |
+| Report path | `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/execution-shadow-YYYY-MM-DD.md` |
 | Prior prompt label in Todoist | Look for descriptions containing `[CLAUDE PROMPT - YYYY-MM-DD]` header |
-| Priority weight | Job Search → Family/Move → Mercy Ships |
+| Priority weight | Job Search → Auburn admin → Encore consulting |
 
 ---
 
@@ -50,7 +50,7 @@ The Execution Shadow is the "doer" in the 3-phase CoS system. After Walk & Talk 
 The Shadow can receive its queue in three ways (in order of preference):
 
 1. **From the Organizer's session report** — If a `cos-sync` or `todoist-organizer` session just ran, pull the 🤖 Claude-Ready Queue from the report directly. No re-pull needed.
-2. **From Todoist directly** — Pull all tasks labeled 🤖 across the three primary project trees (Professional Development → Family → Mercy Ships). This is the standalone mode.
+2. **From Todoist directly** — Pull all tasks labeled 🤖 across the three primary project trees (Professional Development → Family → Encore). This is the standalone mode.
 3. **Named task** — Jeff names a specific task. Shadow acts on it immediately regardless of label.
 
 ### Session open question
@@ -86,7 +86,7 @@ Display the 🤖 Claude-Ready Queue as a prioritized working list before acting 
 
 ```
 🤖 CLAUDE-READY QUEUE — [DATE]
-[N] tasks ready for execution | Priority: Job Search → Family/Move → Mercy Ships
+[N] tasks ready for execution | Priority: Job Search → Auburn admin → Encore consulting
 
 [#] [Task name] (Project: [Project]) — P[X]
     Proposed action: [one line on what Shadow will do]
@@ -103,7 +103,7 @@ or name a task to start there. Say "skip #[N]" to defer any item.
 1. P1 tasks (must do this week)
 2. P2 tasks (important this week)
 3. P3 tasks (this month)
-4. Within each priority: Job Search > Family/Move > Mercy Ships
+4. Within each priority: Job Search > Auburn admin > Encore consulting
 
 Do not re-sort mid-session without telling Jeff.
 
@@ -333,7 +333,7 @@ Never write without this confirm. Never overwrite without showing the diff.
 
 Save a markdown report after completing the queue work.
 
-**Path:** `/Users/jeffbeaumont/Projects/Professional Development/cos-plugin/reports/execution-shadow-YYYY-MM-DD.md`
+**Path:** `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/execution-shadow-YYYY-MM-DD.md`
 
 **Report structure:**
 
@@ -392,7 +392,7 @@ Confirm path to Jeff after saving.
 
 ## Todoist Write Rules (applies across all steps)
 
-- Never modify tasks assigned to Jaclyn (UID `16889336`). If a Jaclyn task is in the queue (it shouldn't be — flag how it got there), surface as a coordination prompt only.
+- Never modify tasks assigned to [PARTNER] (UID `[PARTNER_TODOIST_UID]`). If a [PARTNER] task is in the queue (it shouldn't be — flag how it got there), surface as a coordination prompt only.
 - Never overwrite an existing description without showing the diff
 - Confirm every write before executing
 - Keep descriptions concise: 1–2 sentences for summaries. Claude Code prompts are the only exception — write them in full.

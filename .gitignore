@@ -1,0 +1,15 @@
+# OS
+.DS_Store
+**/.DS_Store
+
+# Local Claude settings (machine-specific, may contain local paths)
+.claude/settings.local.json
+
+# Third-party / shared material — not ours to publish
+Files from Fred/
+
+# Editor / env
+.venv/
+__pycache__/
+*.pyc
+.env

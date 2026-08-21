@@ -37,14 +37,14 @@ An autonomous organizing pass over Jeff's Todoist. Unlike Walk & Talk (which ext
 
 | Constant | Value |
 |----------|-------|
-| Jeff's Todoist UID | `14075501` |
-| Jaclyn's Todoist UID | `16889336` |
+| Jeff's Todoist UID | `[YOUR_TODOIST_UID]` |
+| [PARTNER]'s Todoist UID | `[PARTNER_TODOIST_UID]` |
 | Working hours | 8:30am – 5:00pm (weekdays) |
 | Weekly task cap | 10 hours |
 | Dead task threshold | Overdue 30+ days, no description, no subtasks |
 | Stall threshold | 14+ days since creation with no subtasks/description added |
-| Priority weight | Job Search → Family/Move → Mercy Ships |
-| Report path | `/Users/jeffbeaumont/Projects/Professional Development/cos-plugin/reports/organizer-YYYY-MM-DD.md` |
+| Priority weight | Job Search → Auburn admin → Encore consulting |
+| Report path | `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/organizer-YYYY-MM-DD.md` |
 | Parking Lot project | Jeff's existing "Parking Lot" project |
 | Won't Do project | Jeff's existing "Won't Do" project |
 
@@ -55,15 +55,15 @@ An autonomous organizing pass over Jeff's Todoist. Unlike Walk & Talk (which ext
 **Default scope — all three primary project trees:**
 1. Professional Development (and all subfolders/subprojects) — highest weight
 2. Family (and all subfolders)
-3. Mercy Ships (and all subfolders)
+3. Encore consulting (and all subfolders)
 
 **Scoped run** — Jeff can limit to one project at session start:
 > "Run the Organizer on just Return to Auburn"
-> "Organizer — Agents & NanoClaw only"
+> "Organizer — AI Agents only"
 
 If scoped, skip project health check for out-of-scope projects and note the gap in the session report.
 
-**Always excluded from writes:** Tasks assigned to Jaclyn (UID `16889336`). Review them for issues (missing dates, duplicates, conflicts) but surface findings as coordination prompts only — never write to them.
+**Always excluded from writes:** Tasks assigned to [PARTNER] (UID `[PARTNER_TODOIST_UID]`). Review them for issues (missing dates, duplicates, conflicts) but surface findings as coordination prompts only — never write to them.
 
 ---
 
@@ -157,6 +157,17 @@ For every 🤖 task, also note the **proposed first action** Claude will take if
 - Writing task → "I'll draft a first version for your review"
 - App/widget task → "I'll write the Claude Code prompt and save it to this task"
 
+**`burntokens` sub-label:** Within the 🤖 set, apply the `burntokens` label to any task where AI (Claude or Gemini) can complete 95%+ of the work with zero input or direction from Jeff — no decision needed, no context to extract, no relationship judgment required. These tasks can be executed autonomously in a batch without interrupting Jeff.
+
+Criteria for `burntokens`:
+- Claude has enough context in the task description (or connected tools) to proceed without asking anything
+- Output requires no approval before being useful (or approval is a quick yes/no)
+- No relationship context, financial authority, or Jeff's physical presence is needed
+
+Examples: research and comparison matrix generation, first-draft writing with a clear brief, app/widget builds with a complete spec, data pulls and summaries from connected tools.
+
+**Do not apply `burntokens` to:** anything requiring a decision Jeff hasn't made, tasks where output goes directly to a third party without review, or tasks that overwrite existing files without a diff.
+
 Use existing Todoist labels where they match. If a new label is needed, flag it and ask Jeff before creating.
 
 ---
@@ -168,14 +179,14 @@ Apply Todoist priority levels (P1–P4) to every task, using this framework:
 | Priority | Meaning | Typical tasks |
 |----------|---------|--------------|
 | P1 | Must do this week — urgent + important | Overdue items, hard deadlines in next 7 days, blockers for others |
-| P2 | Important this week — not yet urgent | Advancing job search, move prep with upcoming deadlines, Mercy Ships deliverables |
+| P2 | Important this week — not yet urgent | Advancing job search, move prep with upcoming deadlines, Encore consulting deliverables |
 | P3 | This month — important, not urgent | Strategic projects, deck work, research |
 | P4 | Recurring / habit / nice-to-have | Daily journaling, fitness, low-stakes admin |
 
 **Priority weighting across domains:**
 1. Job Search (Professional Development) — highest
 2. Family / Move (Return to Auburn, Family projects)
-3. Mercy Ships — finish strong, but deadline is fixed at June/July 2026
+3. Encore consulting — bridge engagement; light start, fuller cadence from mid-Oct
 
 **Quadrant rule:** Explicitly label tasks that are important but not urgent (P2/P3 with no near date) as "high-value, no date" and force a due date proposal. These are the tasks that Todoist bankruptcy buries. Don't let them disappear.
 
@@ -246,13 +257,14 @@ Project moves ([N])
 
 AI leverage labels ([N])
 - 🤖 "[Task]" — [proposed first action if executed]
+- 🤖🔥 "[Task]" — burntokens: [what Claude will do autonomously, no input needed]
 - 🤝 "[Task]" — [what Jeff needs to provide]
 
 Needs Walk & Talk clarification ([N])
 - "[Task]" — [what's unclear]
 
-Jaclyn coordination prompts ([N])
-- "[Task]" — [what to check with Jaclyn]
+[PARTNER] coordination prompts ([N])
+- "[Task]" — [what to check with [PARTNER]]
 
 ---
 Ready to write. Say "go" to apply all changes, or call out anything to adjust first.
@@ -272,7 +284,7 @@ Wait for "go" or explicit approval before writing.
 
 Save a markdown report after writing:
 
-**Path:** `/Users/jeffbeaumont/Projects/Professional Development/cos-plugin/reports/organizer-YYYY-MM-DD.md`
+**Path:** `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/organizer-YYYY-MM-DD.md`
 
 **Report structure:**
 ```
@@ -286,7 +298,7 @@ Save a markdown report after writing:
 - Duplicates resolved: [N]
 - 🤖 Claude-ready tasks flagged: [N]
 - Needs Walk & Talk: [N]
-- Jaclyn coordination prompts: [N]
+- [PARTNER] coordination prompts: [N]
 
 ## Project Health
 [table]
@@ -299,6 +311,9 @@ Save a markdown report after writing:
 
 ## 🤖 Claude-Ready Queue
 [list of tasks labeled 🤖, with proposed first action — ready to execute on request]
+
+## 🔥 burntokens Queue
+[list of tasks labeled burntokens — Claude can run these with zero input from Jeff. Surface during next Walk & Talk pull for batch execution.]
 ```
 
 Confirm the file path to Jeff after saving.
@@ -326,7 +341,7 @@ Confirm the file path to Jeff after saving.
 - **No last-activity timestamps from Todoist MCP:** Stall detection uses creation date as proxy. Jeff can dismiss incorrectly flagged tasks at confirm time.
 - **Existing Todoist labels:** Organizer uses Jeff's existing labels only. Any new label requires Jeff's approval. Current label set should be verified at first run.
 - **Asana:** Ignored entirely. If Jeff pastes an Asana CSV manually, note it in the session report but don't integrate into the Organizer's logic.
-- **Jaclyn's tasks:** Can review but never write. All Jaclyn findings surface as coordination prompts only.
+- **[PARTNER]'s tasks:** Can review but never write. All [PARTNER] findings surface as coordination prompts only.
 
 ---
 
@@ -348,3 +363,4 @@ Run this skill when Jeff says any of:
 | Date | Change |
 |------|--------|
 | 2026-05-19 | v1.0 — created. Built from Jeff's walk transcript + Gemini CoS design session. Phase 2 of 3-phase CoS architecture. |
+| 2026-05-31 | v1.1 — added `burntokens` sub-label to AI leverage labeling (Step 6). Tasks meeting 95%+ autonomous threshold get both 🤖 and burntokens labels. Added burntokens queue to session report. Updated session plan format to surface burntokens tasks distinctly. |

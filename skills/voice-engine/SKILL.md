@@ -22,7 +22,7 @@ This skill runs when Jeff wants to:
 
 It does NOT run for:
 - Editing that's purely structural (use the `internal-writing` or `public-writing` skills)
-- StoryBrand strategy (use `/story-brand` first, then come back here with the BrandScript output)
+- StoryBrand strategy (use `/storybrand` first, then come back here with the BrandScript output)
 
 ---
 
@@ -40,7 +40,7 @@ Before building the brief, figure out what Jeff is working with:
 - Ask if he wants a full redraft or a gate review only
 - If gate review only: skip to Step 4
 
-**If he has a BrandScript from `/story-brand`:**
+**If he has a BrandScript from `/storybrand`:**
 - The BrandScript output maps directly to the brief:
   - Hero's desire → first claim
   - Villain/problem → what's at stake
@@ -247,6 +247,6 @@ Note in your output: "Gate not run — Critic and Inspector checks require the C
 
 - **One voice, four tones.** Not four voices. The fingerprint is shared; the tone overlay shifts by format.
 - **LinkedIn uses blog tone.** No dedicated LinkedIn overlay in V1.
-- **Miller only for persuasive.** If `intent` is not `persuasive`, Miller does not run and `/story-brand` is not required upstream.
+- **Miller only for persuasive.** If `intent` is not `persuasive`, Miller does not run and `/storybrand` is not required upstream.
 - **Markdown internally, .docx at export.** Never deliver raw markdown to Jeff as a final artifact.
-- **BrandScript goes in `background_facts`.** When `/story-brand` runs first, paste its output there. Do not modify the brief schema.
+- **BrandScript goes in `background_facts`.** When `/storybrand` runs first, paste its output there. Do not modify the brief schema.
