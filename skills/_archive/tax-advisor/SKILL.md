@@ -20,7 +20,7 @@ User types `/tax-advisor` or asks about:
 ## What This Skill Does
 V2-C tax layer: account-aware sell framing, TLH surfacing, wash-sale tracking, 529 contribution tracking, and asset-location guidance. This is **decision support only** — always flag to consult CPA before acting.
 
-All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion ("Tax Events" DB, data source: `3c05f49c-5a92-4d93-958c-1ecb5f8758f7`).
+All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion ("Tax Events" DB, data source: `[YOUR_TAX_EVENTS_DS_ID]`).
 
 ---
 
@@ -42,7 +42,7 @@ All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion 
 **When to invoke:** User mentions an underwater position in a taxable account, or asks about harvesting.
 
 **Steps:**
-1. Run: `python3 ~/Claude/investing-tool/journal.py tax tlh`
+1. Run: `python3 [YOUR_INVESTING_TOOL_PATH]/journal.py tax tlh`
 2. Walk the prompts (ticker, account, purchase date, cost basis, current price, shares)
 3. The CLI will compute:
    - Days held → STCG vs LTCG classification
@@ -64,7 +64,7 @@ All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion 
 **When to invoke:** User sold a position and may want to re-enter, or just sold for a loss.
 
 **Steps:**
-1. Run: `python3 ~/Claude/investing-tool/journal.py tax wash TICKER`
+1. Run: `python3 [YOUR_INVESTING_TOOL_PATH]/journal.py tax wash TICKER`
 2. Walk prompts (sell date, account, sale price, cost basis)
 3. CLI shows: safe re-entry date = sell date + 30 days
 4. Sync to Notion if user confirms
@@ -82,7 +82,7 @@ All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion 
 **When to invoke:** User mentions making a 529 contribution, or asks about college savings progress.
 
 **Steps:**
-1. Run: `python3 ~/Claude/investing-tool/journal.py tax 529`
+1. Run: `python3 [YOUR_INVESTING_TOOL_PATH]/journal.py tax 529`
 2. CLI shows current YTD totals for all three kids and prompts for the new contribution
 3. After logging, show progress toward each kid's $150K target
 4. Sync to Notion if user confirms
@@ -100,7 +100,7 @@ All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion 
 **When to invoke:** User is considering selling a position and wants the full tax framing before deciding.
 
 **Steps:**
-1. Run: `python3 ~/Claude/investing-tool/journal.py tax sell TICKER`
+1. Run: `python3 [YOUR_INVESTING_TOOL_PATH]/journal.py tax sell TICKER`
 2. Walk prompts (account, purchase date, cost basis, current/proposed price, shares)
 3. CLI computes and surfaces:
    - Days held → STCG vs LTCG
@@ -117,7 +117,7 @@ All data is logged to SQLite (`investing.db` → `tax_events` table) and Notion 
 **When to invoke:** User asks "what tax events have I logged?" or "show my wash-sale windows."
 
 **Steps:**
-1. Run: `python3 ~/Claude/investing-tool/journal.py tax list --days 90`
+1. Run: `python3 [YOUR_INVESTING_TOOL_PATH]/journal.py tax list --days 90`
 2. Output lists all events grouped by type
 3. CLI auto-highlights any open wash-sale windows and 529 YTD summary
 4. No Notion write needed — read-only display
@@ -146,7 +146,7 @@ Surface these rules when the user asks, and cross-reference with the Account fie
 
 ## Notion Write (Tax Events DB)
 
-**DB data source:** `3c05f49c-5a92-4d93-958c-1ecb5f8758f7`
+**DB data source:** `[YOUR_TAX_EVENTS_DS_ID]`
 
 When writing a tax event to Notion, create a page with these mapped fields:
 

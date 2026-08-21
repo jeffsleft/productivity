@@ -17,9 +17,9 @@ Trigger on: "score the CEO", "ceo score TICKER", "run a CEO scorecard on NVDA", 
 ---
 
 ## Notion DB
-- **CEO Scorecards DB ID:** `8a7dcf0bf8614b2ca440d392686fd378`
-- **CEO Scorecards Data Source:** `4a4a31eb-5ece-4414-a4ea-2c1987d9c7ea`
-- **Parent page:** `33ff0f47-cb6c-818e-a756-e329c2f30370` (📈 Investment Research)
+- **CEO Scorecards DB ID:** `[YOUR_CEO_SCORECARDS_DB_ID]`
+- **CEO Scorecards Data Source:** `[YOUR_CEO_SCORECARDS_DS_ID]`
+- **Parent page:** `[YOUR_INVESTMENT_RESEARCH_PAGE_ID]` (📈 Investment Research)
 
 ---
 
@@ -148,7 +148,7 @@ conn.close()
 ```
 
 ### Step 9 — Write to Notion CEO Scorecards DB
-Use `notion-create-pages` with `data_source_id: 4a4a31eb-5ece-4414-a4ea-2c1987d9c7ea`:
+Use `notion-create-pages` with `data_source_id: [YOUR_CEO_SCORECARDS_DS_ID]`:
 
 ```
 Ticker: [TICKER]

@@ -22,8 +22,8 @@ This skill is intentionally designed to be run when you have time — a full por
 ### Step 1 — Determine Scope
 
 **Full portfolio:**
-- Query the Portfolio DB (data_source_id: `61b7f3e7-0300-498d-ab47-cd36a413ed88`) for all entries where Status = "Active"
-- Load `~/Claude/investing-tool/notion_page_ids.json` for page ID lookups
+- Query the Portfolio DB (data_source_id: `[YOUR_PORTFOLIO_DS_ID]`) for all entries where Status = "Active"
+- Load `[YOUR_INVESTING_TOOL_PATH]/notion_page_ids.json` for page ID lookups
 
 **Subset (tickers specified):**
 - Use only the tickers provided in the invocation
@@ -39,8 +39,8 @@ Before starting, tell the user:
 For each ticker in scope, in sequence (not parallel — Alpha Vantage has a 25 req/day limit):
 
 1. Determine asset type (Stock / ETF / ETF-Leveraged / Mutual Fund / Money Market) from the Portfolio DB entry
-2. Run `python3 ~/Claude/investing-tool/sa_fetcher.py TICKER [--etf TICKER]`
-3. Load SA ratings from `~/Claude/investing-tool/sa_ratings.json`
+2. Run `python3 [YOUR_INVESTING_TOOL_PATH]/sa_fetcher.py TICKER [--etf TICKER]`
+3. Load SA ratings from `[YOUR_INVESTING_TOOL_PATH]/sa_ratings.json`
 4. Run two parallel WebSearches: recent news + (CEO for stocks / ETF holdings for ETFs)
 5. Query Notion Source Library for relevant entries (batch: use sector + ticker as query)
 6. Synthesize analysis using the same template as `/analyze-stock`
@@ -56,7 +56,7 @@ After each ticker, print a one-line progress status:
 
 ### Step 3 — Run Macro Snapshot (once, at the start)
 
-Run `python3 ~/Claude/investing-tool/sa_fetcher.py --macro` once before the batch loop begins. Use the same macro data for all tickers in this run (don't re-fetch per ticker — FRED data doesn't change intraday).
+Run `python3 [YOUR_INVESTING_TOOL_PATH]/sa_fetcher.py --macro` once before the batch loop begins. Use the same macro data for all tickers in this run (don't re-fetch per ticker — FRED data doesn't change intraday).
 
 ### Step 4 — Concentration Check
 

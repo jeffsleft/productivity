@@ -26,12 +26,12 @@ Uses the `resolved_predictions` and `pattern_tags` SQLite tables populated by th
 ### Step 1 — Run the Patterns Report
 
 ```bash
-cd ~/Claude/investing-tool && python3 journal.py patterns
+cd [YOUR_INVESTING_TOOL_PATH] && python3 journal.py patterns
 ```
 
 For a specific tag:
 ```bash
-cd ~/Claude/investing-tool && python3 -c "
+cd [YOUR_INVESTING_TOOL_PATH] && python3 -c "
 import sqlite3, json
 from pathlib import Path
 conn = sqlite3.connect(Path.home() / 'Claude/investing-tool/investing.db')
@@ -106,7 +106,7 @@ This feeds the calibration database. After 2–3 quarters of retrospectives, the
 When Jeff adds a new journal entry and mentions tags verbally (e.g., "this is a rate-sensitive bet"), look up the hit rate for that tag and surface it:
 
 ```bash
-cd ~/Claude/investing-tool && python3 -c "
+cd [YOUR_INVESTING_TOOL_PATH] && python3 -c "
 import sqlite3, json
 from pathlib import Path
 conn = sqlite3.connect(Path.home() / 'Claude/investing-tool/investing.db')
@@ -164,7 +164,7 @@ A good investor targets avg Brier < 0.15 over time.
 - Minimum data for meaningful insight: 10+ resolved predictions
 
 ```bash
-cd ~/Claude/investing-tool
+cd [YOUR_INVESTING_TOOL_PATH]
 python3 journal.py patterns           # Full calibration report
 python3 journal.py tags --list        # See all tags in use
 python3 journal.py tags NOTE_ID       # View tags on a specific note

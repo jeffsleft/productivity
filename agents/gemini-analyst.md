@@ -10,7 +10,7 @@ You are a deep analysis agent. You delegate complex analytical tasks to the Anti
 
 ## Prerequisite
 
-Requires Antigravity CLI (`agy`) at `/Users/jeffbeaumont/.local/bin/agy`.
+Requires Antigravity CLI (`agy`) at `[YOUR_AGY_PATH]`.
 
 ## Workflow
 
@@ -25,28 +25,28 @@ Requires Antigravity CLI (`agy`) at `/Users/jeffbeaumont/.local/bin/agy`.
 
 **Company / job opportunity analysis (project directory on disk):**
 ```bash
-/Users/jeffbeaumont/.local/bin/agy --add-dir /path/to/project --print "Analyze these company and job materials as a job opportunity for a GTM Ops / RevOps leader. Score it 1-10 on: role fit, compensation signal, growth trajectory, tech stack modernity, leadership quality signals, red flags. Return a structured scorecard followed by a 5-line recommendation. Files to analyze: company_notes.md, jd.md, financials.txt"
+[YOUR_AGY_PATH] --add-dir /path/to/project --print "Analyze these company and job materials as a job opportunity for a GTM Ops / RevOps leader. Score it 1-10 on: role fit, compensation signal, growth trajectory, tech stack modernity, leadership quality signals, red flags. Return a structured scorecard followed by a 5-line recommendation. Files to analyze: company_notes.md, jd.md, financials.txt"
 ```
 
 **Competitive differentiation:**
 ```bash
-/Users/jeffbeaumont/.local/bin/agy --add-dir /path/to/project --print "Compare these two products from the perspective of a B2B SaaS buyer evaluating CS Ops tooling. Identify: core differentiators, pricing model differences, integration depth, customer segment fit, and which wins for a 200-500 person SaaS company. Return a decision matrix. Files: product_a.md, product_b.md, market_research.md"
+[YOUR_AGY_PATH] --add-dir /path/to/project --print "Compare these two products from the perspective of a B2B SaaS buyer evaluating CS Ops tooling. Identify: core differentiators, pricing model differences, integration depth, customer segment fit, and which wins for a 200-500 person SaaS company. Return a decision matrix. Files: product_a.md, product_b.md, market_research.md"
 ```
 
 **Investment / financial analysis:**
 ```bash
-/Users/jeffbeaumont/.local/bin/agy --add-dir /path/to/project --print "Analyze this company's financial health and growth trajectory. Identify: revenue growth rate, burn vs. growth efficiency, CAC/LTV signals, margin trends, and key risks. Return a structured investment memo format. Files: financials.json, 10k_excerpts.txt, analyst_notes.md"
+[YOUR_AGY_PATH] --add-dir /path/to/project --print "Analyze this company's financial health and growth trajectory. Identify: revenue growth rate, burn vs. growth efficiency, CAC/LTV signals, margin trends, and key risks. Return a structured investment memo format. Files: financials.json, 10k_excerpts.txt, analyst_notes.md"
 ```
 
 **Scraping + analyzing a company's public data (files assembled by you first):**
 ```bash
 # First collect relevant content into temp files, then analyze
-/Users/jeffbeaumont/.local/bin/agy --add-dir /tmp/company_research --print "Analyze this company's culture, operations, and employee sentiment. Identify: leadership style, team growth trends, CS vs Sales ratio signals, product-market fit signals, and any 'Churn and Burn' red flags. Return structured findings."
+[YOUR_AGY_PATH] --add-dir /tmp/company_research --print "Analyze this company's culture, operations, and employee sentiment. Identify: leadership style, team growth trends, CS vs Sales ratio signals, product-market fit signals, and any 'Churn and Burn' red flags. Return structured findings."
 ```
 
 **Deep math or quantitative analysis (inline context):**
 ```bash
-/Users/jeffbeaumont/.local/bin/agy --print "Analyze this dataset. [Specific analytical question.] Show your reasoning, flag any assumptions, and return findings with confidence levels. Data: $(cat data.csv) Assumptions: $(cat model_assumptions.md)"
+[YOUR_AGY_PATH] --print "Analyze this dataset. [Specific analytical question.] Show your reasoning, flag any assumptions, and return findings with confidence levels. Data: $(cat data.csv) Assumptions: $(cat model_assumptions.md)"
 ```
 
 ## Output format to request from agy

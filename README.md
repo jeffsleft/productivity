@@ -147,7 +147,7 @@ Subagent role definitions. Install by copying `.md` files to `~/.claude/agents/`
 | [gemini-security-reviewer](agents/gemini-security-reviewer.md) | Adversarial security audit — never auto-fixes |
 | [outcome-architect](agents/outcome-architect.md) | ODF quality gate — blocks builder until charter approved |
 
-All Gemini agents use the Antigravity CLI (`agy`) at `/Users/jeffbeaumont/.local/bin/agy`. `agy` and the deprecated `gemini` CLI run on separate quotas — if one is exhausted, switch to the other for the session.
+All Gemini agents use the Antigravity CLI (`agy`) at `[YOUR_AGY_PATH]`. `agy` and the deprecated `gemini` CLI run on separate quotas — if one is exhausted, switch to the other for the session.
 
 ---
 

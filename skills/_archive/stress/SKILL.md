@@ -22,7 +22,7 @@ The goal: know in advance how bad it could get. Not prediction — calibration.
 
 ### Step 1 — Fetch Portfolio Weights from Notion
 
-Query the Portfolio DB (data_source_id: `61b7f3e7-0300-498d-ab47-cd36a413ed88`) to get all current holdings with their market values.
+Query the Portfolio DB (data_source_id: `[YOUR_PORTFOLIO_DS_ID]`) to get all current holdings with their market values.
 
 For each holding, extract:
 - Ticker symbol
@@ -54,18 +54,18 @@ EOF
 If portfolio values are unavailable, use equal-weight mode. Note this assumption prominently in the output.
 
 ```bash
-cd ~/Claude/investing-tool && python3 stress.py run --equal-weight
+cd [YOUR_INVESTING_TOOL_PATH] && python3 stress.py run --equal-weight
 ```
 
 ### Step 3 — Run Stress Test
 
 ```bash
-cd ~/Claude/investing-tool && python3 stress.py run --weights /tmp/portfolio_weights.json
+cd [YOUR_INVESTING_TOOL_PATH] && python3 stress.py run --weights /tmp/portfolio_weights.json
 ```
 
 For a single regime:
 ```bash
-cd ~/Claude/investing-tool && python3 stress.py run --weights /tmp/portfolio_weights.json --regime 2022
+cd [YOUR_INVESTING_TOOL_PATH] && python3 stress.py run --weights /tmp/portfolio_weights.json --regime 2022
 ```
 
 This fetches prices for each ticker at the peak and trough of each regime, computes drawdown and weighted drawdown, and writes results to `investing.db` (`stress_results` table).
@@ -90,7 +90,7 @@ The script prints the full report. Synthesize it for Jeff with these additions:
 
 After the run, confirm:
 ```bash
-cd ~/Claude/investing-tool && python3 stress.py view
+cd [YOUR_INVESTING_TOOL_PATH] && python3 stress.py view
 ```
 Results are cached — the quarterly retrospective and Spouse Digest can reference the most recent run without re-fetching.
 
@@ -136,7 +136,7 @@ When reporting to Jeff, lead with this table (pulled from the script output):
 
 View cached results at any time:
 ```bash
-cd ~/Claude/investing-tool && python3 stress.py view
+cd [YOUR_INVESTING_TOOL_PATH] && python3 stress.py view
 python3 stress.py view 2022   # single regime
 python3 stress.py regimes     # see regime definitions
 ```

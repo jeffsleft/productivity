@@ -101,7 +101,7 @@ Open each agent `.md` file and replace the binary path with your actual `agy` lo
 which agy
 
 # Replace the path in all agent files (example — adjust to your actual path)
-sed -i '' 's|/Users/jeffbeaumont/.local/bin/agy|/your/actual/path/to/agy|g' ~/.claude/agents/*.md
+sed -i '' 's|\[YOUR_AGY_PATH\]|/your/actual/path/to/agy|g' ~/.claude/agents/*.md ~/.claude/skills/agent-delegation/SKILL.md
 ```
 
 ### 6. Restart Claude Code
@@ -112,6 +112,32 @@ claude
 ```
 
 The agents are now available via `@` mentions in any Claude Code conversation.
+
+---
+
+## Placeholders
+
+Files in this repo are sanitized — anything specific to one machine or one Notion
+workspace is written as a `[YOUR_*]` token rather than a real value. Nothing here
+is a secret, but none of it is portable either, so substitute before use.
+
+| Placeholder | What to substitute |
+|---|---|
+| `[YOUR_AGY_PATH]` | Absolute path to your `agy` binary — `which agy` |
+| `[YOUR_PROJECTS_PATH]` | Your projects root, e.g. `~/Projects` |
+| `[YOUR_INVESTING_TOOL_PATH]` | Where the investing tool lives, if you use those archived skills |
+| `[YOUR_DRIVE_FOLDER_ID]` | Google Drive folder ID the skill should read |
+| `[YOUR_SHEET_ID]` | Google Sheet ID |
+| `[YOUR_TODOIST_UID]` | Your Todoist user ID |
+| `[YOUR_APP_URL]` | Base URL of your own deployed app |
+| `[YOUR_*_DB_ID]` / `[YOUR_*_DS_ID]` | Notion database and data-source IDs, per skill |
+| `[PARTNER]`, `[Company]` | Names the skill would otherwise hardcode |
+
+Grep for what's left before you run anything:
+
+```bash
+grep -rn "\[YOUR_" ~/.claude/skills ~/.claude/agents
+```
 
 ---
 
@@ -257,7 +283,7 @@ gemini --yolo -p "PLAN ONLY — do not write any files. Task: [...]. $(cat app/r
 
 These agent files are tuned for one specific environment (Python/Modal/Cloudflare stack, macOS). To adapt them:
 
-1. **Update the binary path** in each agent `.md` — replace `/Users/jeffbeaumont/.local/bin/agy` with your actual `agy` path (see §Installation step 5 above).
+1. **Update the binary path** in each agent `.md` — replace `[YOUR_AGY_PATH]` with your actual `agy` path (see §Installation step 5 above).
 2. **Update stack references** in `gemini-security-reviewer.md` — it defaults to `Python · Modal · FastAPI · HTMX · Cloudflare · SQLite`. Change `Stack defaults:` to match your stack.
 3. **Update GEMINI.md** in each project — no stack assumptions, just describe your project.
 

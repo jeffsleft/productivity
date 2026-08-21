@@ -17,10 +17,10 @@ Trigger on: "How are my goals tracking?", "goal status", "am I on track for reti
 ---
 
 ## Notion DBs
-- **Goals DB ID:** `33647a5fe6f74d39b5ffe2f5ed3eb46c`
-- **Goals Data Source:** `004455e9-3338-4517-a86f-db82408fb054`
-- **Portfolio DB ID:** `61b7f3e7-0300-498d-ab47-cd36a413ed88`
-- **Investment Research parent:** `33ff0f47-cb6c-818e-a756-e329c2f30370`
+- **Goals DB ID:** `[YOUR_GOALS_DB_ID]`
+- **Goals Data Source:** `[YOUR_GOALS_DS_ID]`
+- **Portfolio DB ID:** `[YOUR_PORTFOLIO_DS_ID]`
+- **Investment Research parent:** `[YOUR_INVESTMENT_RESEARCH_PAGE_ID]`
 
 ---
 

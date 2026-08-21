@@ -90,7 +90,7 @@ Show a structured summary of all collected fields. Ask "Save this entry?"
 ### Step 6: Write to SQLite
 Run via Bash:
 ```bash
-cd /Users/jeffbeaumont/Claude/investing-tool && python3 -c "
+cd [YOUR_INVESTING_TOOL_PATH] && python3 -c "
 import json, sys
 sys.path.insert(0, '.')
 from journal import get_conn, init_db
@@ -116,8 +116,8 @@ Capture the note ID for the Notion write.
 
 ### Step 7: Write to Notion
 Create a page in the Trade & Belief Journal DB:
-- **DB ID**: `c40af2a18a5a42c9bcacb23c3c94f9f3`
-- **Parent**: 📈 Investment Research (`33ff0f47-cb6c-818e-a756-e329c2f30370`)
+- **DB ID**: `[YOUR_JOURNAL_DB_ID]`
+- **Parent**: 📈 Investment Research (`[YOUR_INVESTMENT_RESEARCH_PAGE_ID]`)
 
 Page title format: `[TICKER] — [Entry Type] — [YYYY-MM-DD]`
 

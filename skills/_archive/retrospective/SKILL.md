@@ -22,7 +22,7 @@ The goal is to make conviction scoring self-correcting over time.
 
 ### Step 1 — Find All Prior Analyses
 
-Search the Analysis Pages DB (data_source_id: `a4f8265c-4e03-4169-af32-8822b24f5cf7`) for all pages.
+Search the Analysis Pages DB (data_source_id: `[YOUR_ANALYSIS_PAGES_DS_ID]`) for all pages.
 
 For each page found:
 - Extract the ticker from the page title
@@ -37,15 +37,15 @@ Skip any tickers where the most recent analysis is less than 60 days old — too
 
 For each eligible ticker, run:
 ```
-python3 ~/Claude/investing-tool/sa_fetcher.py TICKER [--etf TICKER if applicable]
+python3 [YOUR_INVESTING_TOOL_PATH]/sa_fetcher.py TICKER [--etf TICKER if applicable]
 ```
 
 Also run one macro snapshot at the start:
 ```
-python3 ~/Claude/investing-tool/sa_fetcher.py --macro
+python3 [YOUR_INVESTING_TOOL_PATH]/sa_fetcher.py --macro
 ```
 
-Load updated SA ratings from `~/Claude/investing-tool/sa_ratings.json` (these update when a new Excel export is parsed).
+Load updated SA ratings from `[YOUR_INVESTING_TOOL_PATH]/sa_ratings.json` (these update when a new Excel export is parsed).
 
 ### Step 3 — Score Each Thesis
 
@@ -147,10 +147,10 @@ After grading each thesis, resolve it into the calibration database:
 
 ```bash
 # Tag the note (if not already tagged):
-python3 ~/Claude/investing-tool/journal.py tags NOTE_ID rate-sensitive growth-stock
+python3 [YOUR_INVESTING_TOOL_PATH]/journal.py tags NOTE_ID rate-sensitive growth-stock
 
 # Log the grade:
-python3 ~/Claude/investing-tool/journal.py resolve NOTE_ID --grade B
+python3 [YOUR_INVESTING_TOOL_PATH]/journal.py resolve NOTE_ID --grade B
 ```
 
 ---

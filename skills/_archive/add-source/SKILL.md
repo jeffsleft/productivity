@@ -52,7 +52,7 @@ Wait for confirmation before proceeding to Step 4.
 
 ### Step 4 — Create Notion Source Library Entry
 
-Create a new page in the Source Library DB (data_source_id: `dd31ba38-af4a-4c23-af79-a3bf4131c0b2`).
+Create a new page in the Source Library DB (data_source_id: `[YOUR_SOURCE_LIBRARY_DS_ID]`).
 
 Use these property mappings (check the Source Library schema first via `notion-fetch` on the collection URL to confirm property names match):
 

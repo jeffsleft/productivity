@@ -6,7 +6,7 @@ version: 1.0.0
 
 # Antigravity CLI — Agent Delegation Standard
 
-Google deprecated Gemini CLI on June 18, 2026, replacing it with **Antigravity CLI** (`agy` at `/Users/jeffbeaumont/.local/bin/agy`). All subagents that previously called `gemini` now call `agy`.
+Google deprecated Gemini CLI on June 18, 2026, replacing it with **Antigravity CLI** (`agy` at `[YOUR_AGY_PATH]`). All subagents that previously called `gemini` now call `agy`.
 
 ## Quota failover — `agy` ↔ `gemini`
 
@@ -23,7 +23,7 @@ Google deprecated Gemini CLI on June 18, 2026, replacing it with **Antigravity C
 
 ## Binary location
 ```
-/Users/jeffbeaumont/.local/bin/agy
+[YOUR_AGY_PATH]
 ```
 
 ## Key flags
@@ -38,19 +38,19 @@ Google deprecated Gemini CLI on June 18, 2026, replacing it with **Antigravity C
 
 **Stage 1 — Plan (no file writes, no `--dangerously-skip-permissions`):**
 ```bash
-/Users/jeffbeaumont/.local/bin/agy --add-dir /path/to/project --print "PLAN ONLY — do not write any files. Task: [task]. List every file you would create or modify and what changes each requires."
+[YOUR_AGY_PATH] --add-dir /path/to/project --print "PLAN ONLY — do not write any files. Task: [task]. List every file you would create or modify and what changes each requires."
 ```
 Present plan to user or Claude orchestrator. Wait for explicit approval.
 
 **Stage 2 — Execute (only after approval):**
 ```bash
-/Users/jeffbeaumont/.local/bin/agy --dangerously-skip-permissions --add-dir /path/to/project --print "Execute this approved plan: [approved plan text]"
+[YOUR_AGY_PATH] --dangerously-skip-permissions --add-dir /path/to/project --print "Execute this approved plan: [approved plan text]"
 ```
 Review `git diff` after execution before committing.
 
 ## Read-only tasks (research, analysis, security review)
 ```bash
-/Users/jeffbeaumont/.local/bin/agy --add-dir /path/to/project --print "Research/analyze: [task]. Do not write any files."
+[YOUR_AGY_PATH] --add-dir /path/to/project --print "Research/analyze: [task]. Do not write any files."
 ```
 Never use `--dangerously-skip-permissions` for read-only tasks.
 

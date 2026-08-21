@@ -22,29 +22,29 @@ Deep-dive analysis of a single stock, ETF, or fund. Pulls live fundamentals + ma
 - If no SA article text is present, note that SA article analysis will be skipped (ratings only)
 
 ### Step 2 — Determine Asset Type
-Check `~/Claude/investing-tool/notion_page_ids.json` to confirm the ticker exists in the portfolio.
+Check `[YOUR_INVESTING_TOOL_PATH]/notion_page_ids.json` to confirm the ticker exists in the portfolio.
 Then determine type from the Notion Portfolio DB (Stock / ETF / ETF-Leveraged / Mutual Fund / Money Market).
 If the ticker is not in the portfolio, treat it as an ad-hoc analysis and infer type from yfinance output.
 
 ### Step 3 — Fetch Live Data
 Run the fetcher script:
 ```
-python3 ~/Claude/investing-tool/sa_fetcher.py TICKER
+python3 [YOUR_INVESTING_TOOL_PATH]/sa_fetcher.py TICKER
 ```
 For ETFs add the `--etf` flag:
 ```
-python3 ~/Claude/investing-tool/sa_fetcher.py TICKER --etf TICKER
+python3 [YOUR_INVESTING_TOOL_PATH]/sa_fetcher.py TICKER --etf TICKER
 ```
 Also always fetch current macro snapshot:
 ```
-python3 ~/Claude/investing-tool/sa_fetcher.py --macro
+python3 [YOUR_INVESTING_TOOL_PATH]/sa_fetcher.py --macro
 ```
-Read the output from `~/Claude/investing-tool/last_fetch.json`.
+Read the output from `[YOUR_INVESTING_TOOL_PATH]/last_fetch.json`.
 
 **Cross-check flag**: If yfinance and Alpha Vantage differ by >15% on P/E or net margin, flag it explicitly in the Quantitative Snapshot.
 
 ### Step 4 — Load SA Ratings
-Read `~/Claude/investing-tool/sa_ratings.json` and extract the entry for TICKER.
+Read `[YOUR_INVESTING_TOOL_PATH]/sa_ratings.json` and extract the entry for TICKER.
 Fields: `quant_rating`, `sa_analyst_rating`, `wall_street_rating`
 If the ticker is not in the file, note "SA ratings not available — add via /add-source or next Excel export."
 
@@ -80,7 +80,7 @@ Skip for ETFs/funds.
 
 Load both files:
 
-**`~/Claude/investing-tool/risk_rules.json`** — machine-readable caps (authoritative for numbers):
+**`[YOUR_INVESTING_TOOL_PATH]/risk_rules.json`** — machine-readable caps (authoritative for numbers):
 - `single_stock.entry_cap_pct` (8%) and `single_stock.review_trigger_pct` (15%)
 - `sector.alert_pct` (25%) and `sector.hard_limit_pct` (30%)
 - `leveraged_etf.combined_cap_pct` (10%) and `leveraged_etf.review_trigger_days` (180)
@@ -88,7 +88,7 @@ Load both files:
 - `no_fly_zones` list
 - `blocked_signal_conditions` and `warning_signal_conditions` lists
 
-**`~/Claude/investing-tool/strategy_framework.md`** — narrative context, sector stances, account strategy, and the 5-item checklist rules. Use this for qualitative framing in the Strategy Alignment Check section.
+**`[YOUR_INVESTING_TOOL_PATH]/strategy_framework.md`** — narrative context, sector stances, account strategy, and the 5-item checklist rules. Use this for qualitative framing in the Strategy Alignment Check section.
 
 You will use both in Step 8 to run the Risk Cap Gate and generate the Strategy Alignment Check section.
 
@@ -98,7 +98,7 @@ The Source Library DB was a V1 stub that was never populated. As of 2026-05-14, 
 
 **Replacement:** Non-SA contrarian material now flows through Step 7.5 (Contrarian Source Gate) — bear-thesis sourcing comes from `[News]` web search, `[CEO Flags]`, `[Macro Data]`, or `[User-Provided]` rather than a curated DB.
 
-If/when you decide to revive the Source Library (build it for real), restore this step to its previous form (query `dd31ba38-af4a-4c23-af79-a3bf4131c0b2` for relevant entries within the last 6 months) and re-introduce the `[Source Library]` source class to the gate inventory.
+If/when you decide to revive the Source Library (build it for real), restore this step to its previous form (query `[YOUR_SOURCE_LIBRARY_DS_ID]` for relevant entries within the last 6 months) and re-introduce the `[Source Library]` source class to the gate inventory.
 
 ### Step 7.5 — ⛔ Contrarian Source Gate (HARD GATE — do not skip)
 
@@ -426,7 +426,7 @@ conn.close()
 - 1 investor → "◇ Single tracked investor — [investor name] at [X%] of their portfolio"
 - 0 → "No tracked investors hold [TICKER] in the most recent 13F data on file."
 
-**If no data at all in SQLite**: "No smart money data loaded yet — run quarterly 13F update: `python3 ~/Claude/investing-tool/smart_money.py fetch`"
+**If no data at all in SQLite**: "No smart money data loaded yet — run quarterly 13F update: `python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py fetch`"
 
 *Note: 13F data lags up to 45 days after quarter-end. Long equity only — no shorts or options.*
 
@@ -472,7 +472,7 @@ Surface the following in the output (omit rows that don't apply):
 
 **If a wash-sale window is open:** Show the re-entry blackout date prominently. Warn against buying back within 30 days.
 
-**To log this sell decision:** `python3 ~/Claude/investing-tool/journal.py tax sell [TICKER]`
+**To log this sell decision:** `python3 [YOUR_INVESTING_TOOL_PATH]/journal.py tax sell [TICKER]`
 
 ---
 
@@ -503,12 +503,12 @@ If the macro snapshot lacks an obvious connection to this company (rare — but 
 ### Step 9 — Write to Notion
 
 **Find or create the Analysis Page:**
-1. Search the Analysis Pages DB (data_source_id: `a4f8265c-4e03-4169-af32-8822b24f5cf7`) for an existing page with the ticker name.
+1. Search the Analysis Pages DB (data_source_id: `[YOUR_ANALYSIS_PAGES_DS_ID]`) for an existing page with the ticker name.
 2. If found: use `notion-update-page` with `update_content` to **prepend** a new dated section at the top (keep prior analyses below so thesis evolution is visible).
-3. If not found: use `notion-create-pages` with parent `data_source_id: a4f8265c-4e03-4169-af32-8822b24f5cf7` to create a new page titled `[TICKER] Analysis`.
+3. If not found: use `notion-create-pages` with parent `data_source_id: [YOUR_ANALYSIS_PAGES_DS_ID]` to create a new page titled `[TICKER] Analysis`.
 
 **Update the Portfolio DB entry:**
-Use `notion-update-page` on the Portfolio DB entry (look up page ID from `~/Claude/investing-tool/notion_page_ids.json`) to set:
+Use `notion-update-page` on the Portfolio DB entry (look up page ID from `[YOUR_INVESTING_TOOL_PATH]/notion_page_ids.json`) to set:
 - `date:Last Analyzed:start` = today's date
 - `Sizing Signal` = the signal from the analysis
 - `Conviction Rank` = numeric rank if assigned (leave blank if unscored)

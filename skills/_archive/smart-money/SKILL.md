@@ -20,7 +20,7 @@ User types `/smart-money` or asks about:
 V2-I: Surfaces 13F-HR holdings from a curated list of tracked smart-money investors.
 Data is stored in SQLite (`sm_investors` + `sm_holdings`) and summarized in the Notion "Smart Money Holdings" DB.
 
-All commands run from `~/Claude/investing-tool/`.
+All commands run from `[YOUR_INVESTING_TOOL_PATH]/`.
 
 ---
 
@@ -53,7 +53,7 @@ Jeff edits `investors.json` to add/remove investors, then re-runs `seed`.
 
 ### Auto-fetch (try first)
 ```bash
-python3 ~/Claude/investing-tool/smart_money.py fetch
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py fetch
 ```
 If auto-fetch is blocked (403 from EDGAR Archives), use the manual workflow below.
 
@@ -64,17 +64,17 @@ For each investor that fails auto-fetch:
 3. Find the "Information Table" document → click the XML link → Save As
 4. Run:
 ```bash
-python3 ~/Claude/investing-tool/smart_money.py import ~/Downloads/infotable.xml "Investor Name" 2025-Q4
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py import ~/Downloads/infotable.xml "Investor Name" 2025-Q4
 ```
 Repeat for each investor.
 
 ### Verify CIKs first (one-time, before first fetch)
 ```bash
-python3 ~/Claude/investing-tool/smart_money.py verify "Klarman / Baupost"
-python3 ~/Claude/investing-tool/smart_money.py verify "Ackman / Pershing Square"
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py verify "Klarman / Baupost"
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py verify "Ackman / Pershing Square"
 # ... etc for each unverified investor
 # For Ruane Cunniff (no CIK):
-python3 ~/Claude/investing-tool/smart_money.py lookup "Ruane Cunniff"
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py lookup "Ruane Cunniff"
 ```
 
 ---
@@ -83,22 +83,22 @@ python3 ~/Claude/investing-tool/smart_money.py lookup "Ruane Cunniff"
 
 ```bash
 # List all investors + fetch status
-python3 ~/Claude/investing-tool/smart_money.py list
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py list
 
 # See who holds a ticker (most recent quarter per investor)
-python3 ~/Claude/investing-tool/smart_money.py view AAPL
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py view AAPL
 
 # See all holdings for one investor (top 25 by value)
-python3 ~/Claude/investing-tool/smart_money.py investor "Buffett / Berkshire"
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py investor "Buffett / Berkshire"
 
 # Find a CIK by entity name
-python3 ~/Claude/investing-tool/smart_money.py lookup "Baupost"
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py lookup "Baupost"
 
 # Verify a CIK is valid and has 13F filings
-python3 ~/Claude/investing-tool/smart_money.py verify "Klarman / Baupost"
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py verify "Klarman / Baupost"
 
 # Re-seed investors table from investors.json (after editing)
-python3 ~/Claude/investing-tool/smart_money.py seed
+python3 [YOUR_INVESTING_TOOL_PATH]/smart_money.py seed
 ```
 
 ---
@@ -106,7 +106,7 @@ python3 ~/Claude/investing-tool/smart_money.py seed
 ## Notion Sync
 
 After importing new holdings, sync to Notion "Smart Money Holdings" DB
-(data source: `ec48c9e9-9354-4825-b8c8-a346c1750588`).
+(data source: `[YOUR_SMART_MONEY_DS_ID]`).
 
 For each new holding row in SQLite, create a Notion page with:
 
