@@ -30,7 +30,7 @@ This skill is saved as `cos-sync` per the recommendation in `handoff.md`. If Jef
 
 Sequences the full 3-phase CoS daily-operations session. The sub-skills do all the heavy lifting — this orchestrator manages pacing, state passing, and the consolidated close.
 
-**Phase 1 — Walk & Talk Interviewer:** Pulls Todoist + Apple Notes. Generates interview questions. Sends Jeff on a walk. Processes transcript. Writes clarified tasks back to Todoist.
+**Phase 1 — Walk & Talk Interviewer:** Reads the full context first (conversation, user memory, project files, Todoist descriptions, Apple Notes, and whatever system owns the work), then builds an interview script aimed at 95–98% understanding. Sends Jeff on a walk, processes the transcript, and produces a strategy synthesis plus clarified tasks written back to Todoist. A CoS session is that skill's broad-sweep mode — it covers the system, not a single project, so say so when invoking it.
 
 **Phase 2 — Todoist Organizer:** Autonomous audit pass. Cleans dead tasks, resolves duplicates, applies P1–P4 priorities, assigns AI leverage labels (🤖/🤝/👤), schedules the week, proposes project moves. One confirm step before writing.
 
@@ -260,7 +260,7 @@ TOP 3 ACTIONS THIS WEEK
 STILL NEEDS WALK & TALK
 [list of tasks flagged for clarification, if any]
 
-JACLYN COORDINATION PROMPTS
+[PARTNER] COORDINATION PROMPTS
 [list of [PARTNER] tasks with coordination flags, if any]
 
 📅 MEETING PULSE

@@ -1,28 +1,74 @@
 ---
 name: walk-and-talk-interviewer
 description: >
-  Interview Jeff about his vague, stalled, or unclear Todoist tasks to extract real context and intent — then write that context back into Todoist as improved descriptions, subtasks, and notes. Use this skill when Jeff says "walk and talk", "interview me about my tasks", "let's do a task interview", "I went for a walk", "I have a transcript", "help me clarify my tasks", "run the interviewer", or when there's a voice transcript pasted or available in the CoS — Walk & Talk Apple Notes folder. Supports two modes: Walk & Talk (Jeff answers a batch of questions on a walk and pastes/drops the transcript) and In-Session (quick inline Q&A for 1–3 tasks). Always trigger this skill when the user has a voice memo or transcript and wants to connect it to their Todoist.
+  Interview Jeff to build real clarity on a project or across his system — then turn his answers into sharpened strategy and concrete next steps in Todoist and project files. Use this skill when Jeff says "walk and talk", "interview me", "interview me about my tasks", "let's do a task interview", "I went for a walk", "I have a transcript", "help me clarify my tasks", "run the interviewer", "let's go through my Todoist", or when there's a voice transcript pasted or available in the CoS — Walk & Talk Apple Notes folder. Supports two modes: Walk & Talk (Jeff answers a batch of questions on a walk and pastes/drops the transcript) and In-Session (inline Q&A). Always trigger this skill when the user has a voice memo or transcript and wants it connected to their work.
 ---
 
 # Walk & Talk Interviewer
-### Version 1.3 — July 2026
+### Version 2.0 — September 2026
 ### Part of: CoS Plugin
 ### Platform: Claude Cowork + Todoist MCP + Apple Notes MCP
 
 ---
 
-## What This Skill Does
+## The Charter
 
-Turns vague, stalled, and ambiguous Todoist tasks into actionable, well-defined work items — by interviewing Jeff rather than guessing.
+**A walk and talk exists to bring clarity and understanding to a situation — to illuminate what we are actually trying to do, and to produce next steps that both Jeff and Claude understand and can act on.**
 
-Two modes:
+That sentence governs everything below. It is not decoration. Every question earns its place by moving toward clarity on something genuinely unclear, and nothing else.
+
+**There is no banned list of question types here, and none should be added.** Hypotheticals, counterfactuals, open questions, blunt challenges, and plain requests for fact are all legitimate instruments. The charter decides which one a given moment needs. A hypothetical that tests a load-bearing belief is excellent. A hypothetical that asks Jeff to invent a policy he has no reason to hold is worthless — not because it is a hypothetical, but because no understanding sits on the other side of it.
+
+**The test for every question before it ships:** does this produce understanding neither of us has yet, on something that actually matters to what happens next? If not, cut it.
+
+---
+
+## The Strategy Spine
+
+Clarity has structure. Read every topic against four layers, in Rumelt's order:
+
+1. **Diagnosis** — what is actually going on here? The real situation, the real constraint, what actually happened.
+2. **Beliefs** — what does Jeff hold to be true about it, and how firmly? Which beliefs are load-bearing, and which have never been tested?
+3. **Guiding policy** — given the diagnosis and beliefs, what is the approach? The posture, not the task list.
+4. **Coherent actions** — what happens next, who does it, by when.
+
+**The move that makes this skill work: find the weakest layer for each topic, and ask there.** Do not run all four on every topic — that is a checklist, and it wastes the walk.
+
+- Diagnosis thin? Ask what happened, what was said, what is actually in the way. Jeff holds facts no system has.
+- Diagnosis solid but no guiding policy? Stop asking what is going on. Ask what the approach is, and whether one exists at all.
+- Actions clear but resting on a belief nobody has tested? Go at the belief. Usually the highest-leverage question on the walk.
+- Everything clear except the next step? One question, then move on.
+
+Questions may build strategy, refine it, or challenge it. Challenge is in scope at every layer — a guiding policy that cannot survive a good question was not a guiding policy.
+
+Keep the four layers as **invisible scaffolding**. They order the questions; they are not labels shown to Jeff.
+
+---
+
+## Voice: Coach and Counselor
+
+Run as a veteran executive coach with 20–25 years of practice who has also operated a real company. Two registers, both legitimate, used deliberately:
+
+**Counselor** — *"What do you want out of this?"* Opens, explores, surfaces what Jeff has not yet said aloud. Non-directive. Use where understanding is thin, where intent is genuinely unresolved, or where the situation is personally loaded — a friend's business, family, a decision with real cost. You cannot coach someone toward a goal they have not named.
+
+**Coach** — *"It seems like you have been putting this off."* Names a pattern, applies pressure, closes a gap. Directive. Use where Jeff already knows what he wants and is not moving, or where a belief needs weight put on it.
+
+Typical shape within a topic: counselor first to establish what he actually wants, coach after to press the gap between that and what is happening. Do not announce the switch.
+
+**The one standard governing challenge:** pressure must rest on something observable — a date, a count, a direct quote, two statements that do not reconcile, a stated intention with no matching action. *"You have rescheduled this four times"* is earned and useful. *"Are you finishing this because you started it?"* invents a motive and produces defensiveness rather than clarity. The problem is never that a question is hard. It is whether the hard question is grounded.
+
+**Domain shapes instinct.** Read `references/personas.md` for the operator lens per domain — small and mid-size business, software and tech, personal and family — plus worked examples of questions that served the charter and questions that failed it. The persona changes what gets noticed, never the costume worn.
+
+---
+
+## Modes
 
 | Mode | When to use | How answers come in |
 |------|-------------|---------------------|
-| **Walk & Talk** | Many tasks need clarification, or Jeff wants to think out loud | Jeff goes for a walk, records answers to a batch of questions, pastes the transcript (or you pull it from Apple Notes) |
-| **In-Session** | 1–5 tasks, quick inline Q&A | You ask questions directly in the Cowork window, Jeff types answers |
+| **Walk & Talk** | Default. A project or system needs real clarity, or Jeff wants to think out loud | Jeff walks, records answers to a question set, pastes the transcript (or you pull it from Apple Notes) |
+| **In-Session** | 1–5 topics, quick inline Q&A | Ask in the Cowork window, one question at a time, adapting to each answer |
 
-Both modes produce the same output: clarified Todoist tasks with updated descriptions, subtasks where appropriate, and a session summary.
+Both produce the same output: a strategy synthesis, clarified Todoist tasks, and updated project context.
 
 ---
 
@@ -33,201 +79,169 @@ Both modes produce the same output: clarified Todoist tasks with updated descrip
 | Apple Notes folder for transcripts | `Professional Development → Voice Memo Reflections → Walk & Talk` |
 | Jeff's Todoist UID | `[YOUR_TODOIST_UID]` |
 | Stall threshold (days without activity) | 14 days |
-| Max tasks to interview in one Walk & Talk session | 10 (to keep the walk under 30 min) |
+| Understanding target | **95–98% on whatever is in scope** — there is no cap on topics or questions |
+| Note split threshold | ~30 questions per Apple Note |
 | Workspace report path | `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/` |
 
 ---
 
-## STEP 1 — Determine Mode
+## STEP 1 — Scope and Mode
 
-Ask Jeff which mode he wants **only if it isn't already clear from context**:
+**Scope first.** If Jeff names a project or topic, that is the scope. Northern Air means Northern Air. Do not widen it.
 
-- If he pastes a transcript, drops a note, or says "I just got back from a walk" → **Walk & Talk mode**, skip to Step 3 (transcript processing)
-- If he says "interview me", "walk and talk", or "let's go through tasks" without a transcript → **Walk & Talk mode, pre-walk phase** — pull Todoist + Apple Notes first (Step 2), generate the interview script, send Jeff on the walk
-- If he says "just a couple tasks" or names 1–3 specific tasks → **In-Session mode** — pull those tasks only, ask questions inline
-- If Apple Notes MCP is connected, check the `Walk & Talk` folder (under `Professional Development → Voice Memo Reflections`) for any note modified in the last 24 hours before asking — if found, go directly to transcript processing
+If the request is bare ("walk and talk", "interview me") or ambiguous, ask one question before anything else: **this project, or a broad sweep across the system?** Never assume breadth. Broad sweeps are legitimate — they are the Chief of Staff mode, usually inside `cos-sync` — they are simply never the default.
 
-**The full Walk & Talk flow is:**
-1. Pull Todoist + Apple Notes (Step 2) → read everything first
-2. Generate interview script (Step 3) → send Jeff on the walk
-3. Jeff records, saves transcript to Apple Notes
-4. Pull transcript or accept paste (Step 3 return)
-5. Process transcript (Step 4) → write back to Todoist (Step 5)
-6. Hand off vague/unclear tasks to Todoist Organizer
+**Then mode:**
+
+- Jeff pastes a transcript, drops a note, or says "I just got back from a walk" → **Walk & Talk**, skip to Step 5 (transcript processing). Check the `Walk & Talk` Apple Notes folder for a note modified in the last 24 hours before asking him to paste anything.
+- "Interview me", "walk and talk", "let's go through tasks" with no transcript → **Walk & Talk, pre-walk phase** — Steps 2–4.
+- "Just a couple tasks", or he names 1–5 specific items → **In-Session** — same charter and spine, one question at a time, no script artifact.
 
 ---
 
-## STEP 2 — Pull Todoist + Apple Notes
+## STEP 2 — Read Before Asking
 
-Pull both data sources before generating the interview script. Reading everything first is what makes the questions non-generic — questions should be grounded in what's actually in Jeff's system, not invented.
+**Not optional, and the most common point of failure.** Asking Jeff something already knowable wastes the walk and reads as insulting, because it is. Read in this order:
 
-### Apple Notes pull
+1. **The current conversation.** What has Jeff been working on in this session? That context usually names the scope and holds the freshest facts.
+2. **User memory.** Run `memory_list`, then read every file whose description touches anything in scope. Descriptions name what they hold — a file described as "outcome and where the process stands" contains the outcome. Read it.
+3. **Project files on disk.** CLAUDE.md, CONTEXT.md, dated working notes in the relevant project folder.
+4. **Todoist.** Full task *descriptions*, not just titles. Descriptions carry the context that makes a question unnecessary.
+5. **Apple Notes.** Notes modified in the last 8 days under `Professional Development` (including `Voice Memo Reflections`); `Family Shared` only if substantive.
+6. **Whatever other system actually owns the work.** Asana for Encore. Gmail or Calendar when the topic is a meeting or a thread. A task tracked in Todoist may be executed somewhere else entirely.
 
-Pull all notes modified in the last 8 days from these folders (in priority order):
-1. `Professional Development` (and all subfolders, including `Voice Memo Reflections`)
-2. `Family Shared` (lower weight — include only if substantive)
+If a source is unavailable, note the gap and proceed — but say so in the script so Jeff knows what was not read.
 
-Read these for: context on projects Jeff is thinking about, ideas he's captured, blockers he's mentioned, anything that illuminates a vague Todoist task.
+**Then run a staleness pass on every candidate topic:** has this been decided, resolved, killed, or moved since the task was written? A stale task is not a question — at most one line asking for confirmation, and usually it is simply dropped.
 
-If Apple Notes MCP is not connected, note the gap and proceed with Todoist only.
+> **If a fact was knowable and got asked anyway, the failure is Claude's, not Jeff's.**
 
-### Todoist pull
+### Todoist scan windows
 
-Pull Jeff's full active task list. Two windows to scan:
+**Window A — overdue and stalled.** Vague names with no action verb; no description and no subtasks on something complex; overdue by 7+ days with no noted blocker; 14+ days with no activity (creation date as proxy); sitting in a project with no completions in 14 days.
 
-**Window A — Overdue and stalled**
-- Task name is vague (one phrase with no action verb: "Marketing stuff", "Think about X", "Q3 planning")
-- No description and no subtasks on a complex-sounding task
-- Due date is overdue by 7+ days with no apparent blockers noted
-- Task has been in Todoist 14+ days with no completion, subtask, or comment activity (use creation date as proxy if last-activity isn't surfaced)
-- Task is in a project that's been stalled (no completions in 14 days)
+**Window B — upcoming in the next 10 days.** Calculated from session date, not calendar week. Flag items that are undefined, complex with no subtasks, or need external coordination before they can move.
 
-**Window B — Upcoming in the next 10 days**
-Pull all tasks due within the next 10 days. From that list, flag any that are:
-- Vague or undefined (no description, no clear deliverable implied by the task name)
-- Complex-sounding with no subtasks (suggesting no one has thought through the steps yet)
-- Likely to need external coordination or research before they can be executed
+### AI Leverage Assessment — run for every candidate
 
-The 10-day window is calculated from the session date, not the calendar week. This means a Friday session covers the weekend plus the full following week; a Monday session covers that week plus the following Monday through Wednesday.
-
-**AI Leverage Assessment — run for every flagged task**
-
-Before generating interview questions, assess each flagged task for AI leverage:
-
-> Can Claude do 90%+ of the work on this task with minimal input from Jeff?
-
-Apply this label to each task:
+> Can Claude do 90%+ of the work with minimal input from Jeff?
 
 | Label | Meaning |
 |-------|---------|
-| 🤖 **Claude can lead** | Claude can produce a full draft, proposal, research output, or working artifact — Jeff reviews and approves. Minimal interview needed; just a directional answer. |
-| 🤝 **Claude can assist** | Claude can take the first 50–70% (draft, framework, options list), but Jeff needs to provide domain judgment or a decision. Ask focused questions. |
-| 👤 **Jeff must lead** | Primarily judgment, relationship, or execution that can't be delegated. Claude can prep and support but not drive. Ask clarifying questions to unblock. |
+| 🤖 **Claude can lead** | Claude produces a full draft, research output, or working artifact — Jeff reviews. Needs only a directional answer. |
+| 🤝 **Claude can assist** | Claude takes the first 50–70%; Jeff supplies domain judgment or a decision. Ask focused questions. |
+| 👤 **Jeff must lead** | Judgment, relationship, or execution that cannot be delegated. Ask what unblocks it. |
 
-Examples of 🤖 Claude can lead:
-- Research tasks ("Look into X vendors", "Summarize Y policy")
-- First-draft writing (proposals, emails, strategy docs, SOPs)
-- Building or updating a widget, app, script, or automation
-- Generating a prompt for Claude Code to act on
-- Comparison matrices, decision frameworks, option analyses
-- Todoist task breakdowns and subtask generation
+🤖 examples: research and comparison matrices, first-draft writing, building or updating a script or automation, generating a Claude Code prompt, task breakdowns.
 
-Surface the AI leverage label alongside each task in the interview script. For 🤖 tasks, generate a proposed first action Claude will take immediately after Jeff gives a directional answer — don't wait for a full transcript to start.
-
-**Cap:** Surface the top 10 candidates maximum across both windows. Prioritize by: overdue → upcoming in next 3 days → upcoming in days 4–10 → stalled.
-
-Do not surface tasks that are clearly self-explanatory single actions (e.g., "Buy stamps", "Reply to Sarah re: invoice").
+Surface the label with each topic. These labels are the input contract for `execution-shadow` and the Organizer — do not drop them. For 🤖 topics, prepare the first action to take the moment Jeff gives a direction.
 
 ---
 
-## STEP 3 — Generate Interview Questions
+## STEP 3 — Select Topics
 
-For each flagged task, generate 2–4 targeted questions. The goal is to extract:
+From the scope, pull candidates where clarity is genuinely missing:
 
-1. **What does "done" actually look like?** (The deliverable, not the activity)
-2. **What's blocking it, if anything?** (Dependency, decision, information gap, or just hasn't started)
-3. **What's the next single physical action?** (The thing Jeff would do if he sat down right now)
-4. **Who else is involved, if anyone?**
+- Live decisions with real stakes or a near deadline
+- Work where the diagnosis, beliefs, guiding policy, or next actions are unclear
+- Stalled items where the reason for the stall is unknown — unknown, not assumed
+- Anything where Jeff holds context no system does
 
-**Question design rules:**
-- Never ask questions whose answers are already obvious from context (don't ask "what project is this for?" if it's in the Return to Auburn project)
-- Lead with the most clarifying question first — if Jeff only answers one, it should be the one that unlocks the most
-- For overdue tasks, always ask: "Is this still relevant, or should we kill it?"
-- Phrase questions in second person, conversationally — Jeff will be reading these aloud on a walk
+**Skip:** self-explanatory single actions ("Buy stamps"); anything already decided; anything owned and being handled in another system; personal or health-adjacent items unless Jeff raises them himself.
 
-### Walk & Talk batch format
+**There is no cap on topics or questions.** The target is **95–98% understanding** of what is in scope. One topic taken to real depth beats ten skimmed. Fifteen questions on a single project is a good walk if that is what the understanding requires. The only length constraint is note readability — see the ~30-question split rule in Step 4.
 
-Compile all questions into one numbered interview script. Group by task. Include the AI leverage label for each task so Jeff knows what to expect when he gets back.
+---
+
+## STEP 4 — Build the Script
+
+For each topic:
+
+**Lead with what is already known.** State the current read in one or two lines — the facts, the strategy as understood, the open gap — then ask. This keeps Jeff from spending breath on what should have been read, and lets him correct a wrong read directly. *"Here is where I have this — what is off?"* beats *"Where does this stand?"* every time.
+
+**Then ask at the weak layer.** One question per beat. Conversational, second person, answerable from memory while walking with no screen and no lookup.
+
+**Land every topic on what happens next.** If a block cannot end with Jeff able to name a next step — or Claude able to take one — the block has not done its job.
+
+**Recommended answers.** When a topic is a decision or strategy question rather than task clarification, follow the question with an italic `<p style="font-size: 18px"><i>My take:</i> …</p>` line giving Claude's recommended answer. Jeff can then agree, disagree, or push back instead of generating from scratch — far higher yield per minute of walking. (Mirrors `grill-with-docs`, which requires a recommended answer per question.) Recommendations must be real positions, not hedges.
 
 **The script is written to Apple Notes and read off an iPhone on a walk. It MUST be authored as HTML — see `## Apple Notes Formatting` below. Never write plain text with ASCII dividers (`===`, `---`) or ALL-CAPS pseudo-headers into an Apple Note; Apple Notes is a rich-text surface and that output is unreadable on a phone.**
 
 Format:
 
 ```html
-<h1>Walk &amp; Talk — [TOPIC]</h1>
-<p style="font-size: 18px"><b>[DATE] · [N] tasks · ~[N×3] min</b></p>
+<h1>Walk &amp; Talk — [SCOPE]</h1>
+<p style="font-size: 18px"><b>[DATE] · [N] topics</b></p>
 <p style="font-size: 18px">Answer out loud, in order if you can. Skip freely — just say the number.</p>
+<p style="font-size: 18px"><i>Built from: [one line on what was read].</i></p>
 
-<h2>1. [Task name] — 🤖 Claude can lead</h2>
-<p style="font-size: 18px"><i>Flagged because: [one sentence — vague, overdue, upcoming, stalled].</i></p>
-<p style="font-size: 18px"><b>Q1.</b> [Most clarifying question]</p>
-<p style="font-size: 18px"><b>Q2.</b> [Secondary question if needed]</p>
+<h2>1. [Topic name] — 🤖 Claude can lead</h2>
+<p style="font-size: 18px"><i>What I have:</i> [current read in 1–2 lines — facts, current strategy, the gap]</p>
+<p style="font-size: 18px"><b>Q1.</b> [Question at the weakest layer]</p>
+<p style="font-size: 18px"><i>My take:</i> [recommended answer, where this is a decision]</p>
+<p style="font-size: 18px"><b>Q2.</b> [Question — landing on next step]</p>
 
-<h2>2. [Task name] — 👤 Jeff must lead</h2>
-<p style="font-size: 18px"><i>Flagged because: [one sentence].</i></p>
-<p style="font-size: 18px"><b>Q1.</b> [Question targeting the blocker or decision]</p>
-<p style="font-size: 18px"><b>Q2.</b> [Question]</p>
+<h2>2. [Topic name] — 👤 Jeff must lead</h2>
+<p style="font-size: 18px"><i>What I have:</i> [current read]</p>
+<p style="font-size: 18px"><b>Q1.</b> [Question]</p>
 ```
 
-**For 🤖 Claude can lead tasks:** Keep questions short and directional. Jeff only needs to answer "what outcome do you want?" — Claude will handle the rest after the walk.
+**Cap note length.** If a set exceeds ~30 questions, split into two notes (`— Part 2` or `— Block [X]`) and cross-link them with a closing line. Long single notes are hard to scroll while walking. Depth is unlimited; note length is not.
 
-**Recommended answers.** When the session is a decision or strategy grill rather than task clarification, follow every question with an italic `<p><i>My take:</i> …</p>` line giving Claude's recommended answer. Jeff can then agree, disagree, or push back instead of generating from scratch — far higher yield per minute of walking. (This mirrors `grill-with-docs`, which requires a recommended answer per question.)
-
-**Write the note, then tell Jeff:** create the note directly via Apple Notes MCP in `Professional Development → Voice Memo Reflections → Walk & Talk`, then say: "Question set is in Apple Notes under [note name]. Record your answers on Voice Memos, drop the transcript in that same note, then come back and paste it here — or just say 'I saved the transcript' and I'll pull it."
-
-**Cap note length.** If a set exceeds ~30 questions, split into two notes (`— Part 2` or `— Block [X]`) and cross-link them with a closing line. Long single notes are hard to scroll while walking.
-
-### In-Session mode
-
-Ask questions task by task. Present one task at a time. After Jeff answers, move to the next. Do not ask all questions at once in In-Session mode.
+**Write the note, then tell Jeff:** create it via Apple Notes MCP in `Professional Development → Voice Memo Reflections → Walk & Talk`, post the same content in chat so he can read it immediately, then say: "Question set is in Apple Notes under [note name]. Record your answers on Voice Memos, drop the transcript in that same note, then come back and paste it here — or just say 'I saved the transcript' and I'll pull it."
 
 ---
 
-## STEP 4 — Process Transcript or Answers
+## STEP 5 — Process Transcript or Answers
 
-### If transcript is provided (Walk & Talk mode)
+### If a transcript is provided
 
-1. Read the full transcript without interrupting
-2. Match Jeff's answers back to the original questions and tasks — use fuzzy matching if he didn't answer in strict order
-3. Extract from each answer:
-   - Deliverable / definition of done
-   - Blockers (explicit or implied)
-   - Next physical action
-   - Any new subtasks or dependencies mentioned
-   - Kill decisions ("yeah we're not doing that anymore")
-4. If an answer is ambiguous or incomplete, note it for follow-up — don't guess
+1. Read the full transcript without interrupting.
+2. Match answers to topics by content, not order — Jeff skips, reorders, and answers two at once.
+3. Extract per topic: the diagnosis as Jeff now states it; beliefs revealed, including confidence and anything he flags as uncertain; the guiding policy if one emerged; concrete next actions; new subtasks or dependencies; kill decisions; and anything contradicting what was previously recorded.
+4. If an answer is ambiguous or incomplete, flag it for follow-up — do not guess.
 
-**After processing the transcript, split tasks into two tracks:**
+**Treat pushback as signal about the questions, not resistance.** If Jeff says a question was pointless, hypothetical for its own sake, insulting, or already answered, that is a defect in Step 2 or Step 4. Record it, name it in the synthesis, and fix the next script. Never re-ask a rejected question in different words.
 
-**Track 1 — 🤖 Claude can lead:** Immediately draft the artifact, proposal, or first output and present it to Jeff. Don't ask him to do anything — just produce it. Examples:
-- Research task → produce the research summary or comparison matrix now
-- "Write a proposal for X" → draft the proposal now
-- "Figure out how to build Y" → generate a Claude Code prompt or working plan now
-- Vague project setup → generate a project brief with subtasks and post it to Todoist
+**Then split into two tracks:**
 
-**Track 2 — 🤝 / 👤 Jeff must be involved:** Update Todoist with clarified description, next action, and subtasks per Step 5. These wait for Jeff's review before any further action.
+**Track 1 — 🤖 Claude can lead.** Immediately draft the artifact, proposal, or first output and present it. Do not ask him to do anything — produce it. Research task → the summary now. "Write a proposal for X" → the draft now. "Figure out how to build Y" → the Claude Code prompt or working plan now.
 
-Present Track 1 outputs first (highest leverage), then Track 2 Todoist updates.
+**Track 2 — 🤝 / 👤 Jeff must be involved.** Update Todoist per Step 6 and wait for his review.
 
-### If in-session (typed answers)
+Present Track 1 outputs first (highest leverage), then Track 2.
 
-Process answers inline as they come. For 🤖 tasks, immediately start producing the artifact after Jeff's directional answer — don't wait for a full session. For 🤝 / 👤 tasks, confirm understanding before writing back: "Got it — I'll update the task to say [X]. Correct?"
+### If in-session
+
+Process inline. For 🤖 topics start producing after the directional answer. For 🤝 / 👤, confirm before writing back: "Got it — I'll update the task to say [X]. Correct?"
 
 ---
 
-## STEP 5 — Write Back to Todoist
+## STEP 6 — Synthesize and Write Back
 
-For each task with sufficient context from Jeff's answers:
+Produce the synthesis first. It is the point of the exercise.
 
-**Update the task description** with:
-- One-sentence definition of done: "Done when: [X]"
-- Blockers (if any): "Blocked by: [X]"
-- Next action: "Next: [X]"
-- Any relevant context Jeff gave that isn't captured elsewhere
+```
+WALK & TALK SYNTHESIS — [SCOPE] — [DATE]
 
-**Add subtasks** if Jeff described multiple steps or deliverables. Keep subtask names as concrete single actions.
+Diagnosis: what is actually going on, in Jeff's words where possible
+Beliefs: what he holds true, flagged where untested or load-bearing
+Guiding policy: the approach, or a note that none exists yet
+Coherent actions: owner + date, each traceable to something he said
 
-**Reschedule** if Jeff indicated a new timeframe.
+Still unclear: [items below the 95% target, for the next walk]
+Where the strategy looks thin: [honest read — the coach's closing note]
+Question defects: [any question he rejected, and why it failed]
+```
 
-**Delete or complete** if Jeff said the task is no longer relevant or is already done.
+Then write back:
 
-**Do not modify tasks Jeff didn't discuss.** Only touch tasks that were part of this session.
-
-Always confirm before writing back: show Jeff a one-line summary of each planned update and wait for "go" or "looks good" before calling Todoist MCP write tools.
+- **Todoist** — updated descriptions (`Done when:` / `Blocked by:` / `Next:`), subtasks as concrete single actions, reschedules, completions and deletions where Jeff said so.
+- **Project files** — where a topic has a project folder, fold durable findings into its CONTEXT.md or a dated note, following that project's conventions.
+- **User memory** — where an answer changes a durable fact about Jeff's world, update the relevant memory file so the next session starts current. This is what prevents the next script from asking about something already settled.
+- **Session file** — save the synthesis to `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/walk-talk-YYYY-MM-DD.md` and confirm the path.
 
 ### Todoist Organizer handoff
-
-After writing back, produce a handoff list for the Todoist Organizer:
 
 ```
 WALK & TALK → ORGANIZER HANDOFF — [DATE]
@@ -242,48 +256,19 @@ Ready for Organizer:
 Say "run the organizer" to continue.
 ```
 
-The Organizer should always run after Walk & Talk in a full CoS session — Walk & Talk enriches the tasks, Organizer acts on them.
-
----
-
-## STEP 6 — Session Summary
-
-After writing back, produce a brief session summary:
-
-```
-Walk & Talk Session — [DATE]
-
-Tasks reviewed: [N]  ([N] overdue/stalled + [N] upcoming)
-Tasks clarified + updated in Todoist: [N]
-Tasks killed: [N]
-🤖 Claude-led actions taken this session: [N] (list each with one line on what was produced)
-Follow-up needed: [N] (list them if any)
-
-[1–2 lines on what was most useful or what still needs attention]
-```
-
-Save the summary as a markdown file:
-**Path:** `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/reports/walk-talk-YYYY-MM-DD.md`
-
-Confirm path to Jeff after saving.
+Run the Organizer after a broad sweep — Walk & Talk enriches, Organizer acts. Skip the handoff for a single-project walk unless Jeff asks.
 
 ---
 
 ## Voice Input Workflow
 
-Jeff's preferred capture flow:
-
 1. Open **Voice Memos** on iPhone
-2. Record answers to the interview script on a walk (~30 min)
+2. Record answers on a walk
 3. Let Apple transcribe the audio
 4. Save transcript to Apple Notes: **`Professional Development → Voice Memo Reflections → Walk & Talk`**
-5. Either:
-   - Notify Claude in Cowork ("I saved the transcript, go grab it")
-   - Or paste the transcript directly into the Cowork window
+5. Either notify Claude ("I saved the transcript, go grab it") or paste it directly into Cowork
 
-If Apple Notes MCP is connected, check the `Walk & Talk` (under `Professional Development → Voice Memo Reflections`) folder automatically when Jeff says he's back from a walk.
-
-If the Apple Notes MCP is not connected or the folder is empty, ask Jeff to paste the transcript directly.
+When Jeff says he is back from a walk, check the `Walk & Talk` folder automatically. If the MCP is unavailable or the folder is empty, ask him to paste.
 
 ---
 
@@ -301,82 +286,93 @@ Apple Notes is a rich-text surface. The `add_note` / `update_note_content` MCP t
 | `<h2>` | Apple Notes **Heading** — 15px bold | Section / block headers |
 | `<p style="font-size: 18px">` | **15px plain — USE THIS FOR ALL BODY TEXT** | Every question and answer line |
 | `<b>` | Bold | Question numbers, key terms, emphasis |
-| `<i>` | Italic | "My take:" recommendations, flag reasons |
+| `<i>` | Italic | "My take:" recommendations, "What I have:" reads |
 | `<u>` | Underline | Rare — avoid, reads as a link |
 | `<ul><li>` | Proper bullet list | Option lists, sub-points |
 | `<p>` | 11px — **too small to read on a phone** | Don't use bare `<p>` for body |
 
-### Font sizing — the one that bit us (2026-07-28)
+### Font sizing — the one that bit us (2026-07-28, again 2026-09-12)
 
 Apple Notes **snaps all text to three presets: 21px / 15px / 11px.** It does not honor arbitrary sizes, and it silently discards most sizing markup:
 
 | Written | Rendered |
 |---|---|
 | `<p>text</p>` | 11px — Apple Notes "Body", too small |
+| `<div>text</div>` | **11px — no sizing honored** |
 | `<span style="font-size: 14px">` | **11px — style ignored** |
 | `<div style="font-size: 16px">` | **11px — style ignored** |
 | `<font size="4">` | **11px — ignored** |
 | `<p style="font-size: 18px">` | **15px — works** ✓ |
 
-Only an inline `style` on the `<p>` itself is honored, and it snaps to the nearest preset. **Default every body paragraph to `<p style="font-size: 18px">`.** Bare `<p>` renders at 11px, which Jeff has explicitly flagged as too small to read while walking. Headings stay distinguishable because `<h2>` is 15px *bold* while body is 15px plain.
+Only an inline `style` on the `<p>` itself is honored, and it snaps to the nearest preset. **Default every body paragraph to `<p style="font-size: 18px">`.** Bare `<p>` and `<div>` both render at 11px, which Jeff has explicitly flagged as too small to read while walking. Headings stay distinguishable because `<h2>` is 15px *bold* while body is 15px plain.
 
 ### Does NOT work — known failures
 
 - **`<ol>` silently collapses to an unordered bullet list.** The numbers are discarded with no error. **Always hardcode numbering into the text** (`<p><b>7.</b> Question…</p>`), never rely on `<ol>`.
 - **`<hr>` does not render a divider.** It becomes an empty gray line. Use an `<h2>` to break sections instead.
 - Do not wrap the whole note in `<html>` or `<body>` tags.
-- Escape literal ampersands as `&amp;` (e.g., `Walk &amp; Talk`).
+- **Straight quotes (`"`) come back as `&quot` — a broken entity with no semicolon.** Tested 2026-09-12, both directions. **Use typographic quotes instead — `‘ ’` and `“ ”` round-trip clean.** Apostrophes (`'`) are fine.
+- **Never HTML-escape the `folder` or `note_name` arguments.** `folder: "Walk &amp; Talk"` fails to match the real folder and the call errors with `Can't get folder`. Pass the literal name: `folder: "Walk & Talk"`.
+- **Ampersands in the note body are unreliable.** Both a literal `&` and an escaped `&amp;` read back as `&amp` via `get_note_content`. [Unverified] whether that is what Apple Notes actually displays or an artifact of the reader's own escaping — the two are indistinguishable from the MCP side. Where the character is load-bearing, write "and" instead, or have Jeff confirm visually once.
+- **The `<h1>` renames the note.** Apple Notes takes the first line as the note name, so an `<h1>` that differs from the current name silently renames it. Before updating an existing note, `list_notes` on the folder to get its exact current name and mirror that name in the `<h1>` — another session or Jeff may have renamed it.
 
 ### Anti-patterns
 
 - ✗ ASCII dividers: `===`, `---`, `***`
 - ✗ ALL-CAPS lines used as headers
 - ✗ Markdown syntax (`##`, `**bold**`, `- bullet`) — Apple Notes renders these as literal characters
-- ✓ Real `<h1>` / `<h2>` / `<b>` / `<ul>`
+- ✗ `<div>` for body text — renders 11px
+- ✓ Real `<h1>` / `<h2>` / `<p style="font-size: 18px">` / `<b>` / `<i>` / `<ul>`
 
 ### Verify after writing
 
-After creating or updating a note, call `get_note_content` on it once and confirm the returned markup contains `<b>`, `<span style="font-size: 21px">`, or `<ul>` — not a single undifferentiated `<div>` block. If it came back flat, the content was sent as plain text; rewrite it.
+After creating or updating a note, call `get_note_content` on it once and confirm the returned markup contains real styling — not a single undifferentiated `<div>` block. If it came back flat, the content was sent as plain text or as `<div>`s; rewrite it.
 
 ---
 
 ## Todoist Write Rules
 
-These apply any time this skill writes back to Todoist:
-
 - Never overwrite an existing description without showing Jeff the diff first
-- Subtasks should be concrete single actions, not categories (✓ "Email vendor for quote" not ✗ "Vendor outreach")
+- Show a one-line summary of each planned update and wait for "go" before calling write tools
+- Subtasks are concrete single actions, not categories (✓ "Email vendor for quote" ✗ "Vendor outreach")
 - Keep descriptions under 200 words — this is a task manager, not a doc
 - Don't add due dates unless Jeff explicitly gave one during the interview
+- **Do not modify tasks Jeff didn't discuss**
 - If a task is in a shared project with [PARTNER], flag any updates that affect her ownership before writing
 
 ---
 
 ## Integration Notes
 
-- **`weekly-review` skill:** The Walk & Talk Interviewer complements the weekly review. Run it when the weekly review surfaces a cluster of unclear tasks.
-- **Auburn move tasks:** If Auburn move items come up in the interview, handle them through this skill's normal write-back step. (The standalone `ca-move-pulse` skill was retired 2026-08-19.)
-- **`grill-me` skill:** For a single high-stakes task or project that needs deep stress-testing (not just clarification), use `/grill-me` instead. Walk & Talk is for breadth across many tasks; grill-me is for depth on one.
+- **`cos-sync`:** Phase 1 of the full CoS session. That is the broad-sweep mode — scope covers the system, not one project.
+- **`todoist-organizer`:** Runs after Walk & Talk. Walk & Talk enriches tasks; the Organizer prioritizes and schedules them.
+- **`execution-shadow`:** Consumes the 🤖 Claude-Ready queue produced here. The AI leverage labels are its input contract.
+- **`decision-accountability`:** Decisions surfaced in a walk belong in `cos-plugin/decision-log.md`, which is that skill's source of record.
+- **Auburn move tasks:** handle through this skill's normal write-back step. (The standalone `ca-move-pulse` skill was retired 2026-08-19.)
+- **`grill-me` / `grill-with-docs`:** for a single high-stakes plan needing deep stress-testing against documented decisions. Walk & Talk now carries the strategy spine itself, so the line is format, not depth — grill is interactive and doc-updating; Walk & Talk is asynchronous and voice-first.
 
 ---
 
-## Known Limitations (updated July 2026)
+## Known Limitations
 
 - **Apple Notes `<ol>` numbering is lost.** Ordered lists render as bullets. Hardcode numbers in the text. See `## Apple Notes Formatting`.
-- **No delete tool in the Apple Notes MCP.** Notes created in error must be deleted by Jeff by hand — so don't create scratch/test notes in the `Walk & Talk` folder without telling him.
-- **No last-activity timestamps from Todoist MCP:** Stall detection uses creation date as a proxy. Tasks created long ago but actively worked on may be incorrectly flagged. Jeff can dismiss these during the interview.
-- **Apple Notes MCP date filtering:** Pull notes modified in the last 24 hours to find the most recent transcript. If Jeff has multiple Walk & Talk notes, ask which one to use.
-- **Voice transcription accuracy:** Apple's built-in transcription is good but not perfect. If a key answer is garbled, flag it rather than guessing.
-- **Todoist MCP write tools:** Confirm all writes before execution. The MCP can update task descriptions, add subtasks, and reschedule — but cannot post comments natively. If a note belongs in a comment, include it in the description instead.
+- **`<div>` and `<span>` sizing is ignored.** Only `<p style="font-size: 18px">` yields readable body text.
+- **No delete tool in the Apple Notes MCP.** Notes created in error must be deleted by Jeff by hand — so don't create scratch or test notes in the `Walk & Talk` folder without telling him.
+- **No last-activity timestamps from Todoist MCP.** Stall detection uses creation date as a proxy. Tasks created long ago but actively worked may be flagged wrongly; Jeff can dismiss these.
+- **Apple Notes MCP can be slow or time out.** `list_notes` with no `folder` argument across a large store times out at 60s. Always pass `folder` to scope it. If it still fails, write the note anyway and post the same content in chat.
+- **Straight quotes and ampersands are mangled in note bodies.** Use typographic quotes. See `## Apple Notes Formatting`.
+- **Notes get renamed between sessions.** Jeff and other sessions rename walk notes (e.g. appending a project name). Always `list_notes` the folder for the exact current name before an update, and mirror it in the `<h1>`.
+- **Todoist date field is `dueDate`, not `due.date`.** Queries reading `.due.date` return null for every task and silently look like "no dated work exists."
+- **Voice transcription accuracy.** Apple's transcription is good but not perfect. If a key answer is garbled, flag it rather than guessing.
+- **Todoist MCP cannot post comments.** If a note belongs in a comment, put it in the description instead.
 
 ---
 
 ## Session Trigger Phrases
 
-Run this skill when Jeff says any of:
 - "Walk and talk"
 - "Run the interviewer"
-- "Interview me about my tasks"
+- "Interview me" / "Interview me about my tasks"
 - "I just got back from a walk"
 - "I have a transcript"
 - "Help me clarify my tasks"
@@ -394,3 +390,4 @@ Run this skill when Jeff says any of:
 | 2026-05-19 | v1.1 — added 10-day upcoming window; added AI Leverage Assessment (🤖/🤝/👤 labels); Track 1/2 split in Step 4 so Claude-led tasks get immediate action after walk; updated session summary format. |
 | 2026-05-19 | v1.2 — clarified full Walk & Talk flow (Todoist + Apple Notes read before generating questions); added Apple Notes pull to Step 2; added Organizer handoff block at end of Step 5; corrected mode detection logic. |
 | 2026-07-28 | v1.3 — **Apple Notes formatting fixed.** Root cause: Step 3's batch format specified a plain-text code block, so walk scripts were written as ASCII-divider walls of 11px text, unreadable on a phone. Added a full `## Apple Notes Formatting` section with verified tag support (`<h1>`/`<h2>`/`<b>`/`<i>`/`<ul>` work; `<ol>` silently collapses to bullets; `<hr>` renders as a blank line), anti-patterns, and a `get_note_content` verify step. Font sizing: Apple Notes snaps to 21/15/11px presets and ignores `<span>`/`<div>`/`<font>` sizing entirely — only `<p style="font-size: 18px">` produces readable 15px body text; bare `<p>` renders at 11px, which Jeff flagged as unreadable on a phone. Rewrote the Step 3 batch format as HTML. Added the "recommended answer" (`My take:`) convention for decision/strategy grills, borrowed from `grill-with-docs`. Added a 30-question note-split cap. Added two Known Limitations (no `<ol>` numbering, no Apple Notes delete tool). |
+| 2026-09-12 | v2.0 — **rewritten around a charter.** Root cause of the 2026-09-12 session failure: the skill optimized for task clarification and had no stated purpose, so question selection defaulted to generic patterns — hypothetical thresholds, policy invention, and challenges built on invented motives — and one question asked about an opportunity that user memory recorded as closed the previous day. Added **The Charter** (clarity, understanding, actionable next steps) as the governing test for every question, with an explicit instruction that no question *type* is banned — the charter decides. Added **The Strategy Spine** (diagnosis → beliefs → guiding policy → coherent actions) with the weakest-layer rule. Added **Voice: Coach and Counselor** with an evidence standard for challenge, plus `references/personas.md` carrying domain operator lenses and worked good/bad question examples. Step 2 became a hard read gate ordered conversation → user memory → project files → Todoist descriptions → Apple Notes → owning system, with a staleness pass. Scope now follows what Jeff names; broad sweeps must be asked for. Removed the 10-task cap in favour of a 95–98% understanding target (note-length split retained). Scripts now lead with what is already known. Output is a strategy synthesis plus task edits, and includes a question-defect log. Preserved from v1.3: Apple Notes HTML rules (extended — `<div>` also renders 11px, and `&amp;` must not be escaped in MCP folder arguments), the `My take:` convention, AI leverage labels as the `execution-shadow` input contract, Todoist write rules, and the Organizer handoff. |

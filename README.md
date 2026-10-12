@@ -54,7 +54,7 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [article-rewrite](skills/article-rewrite/) | Rewrite generic drafts with specific voice |
 | [seo-aeo-audit](skills/seo-aeo-audit/) | SEO and AEO audit for blog content |
 | [storybrand](skills/storybrand/) | StoryBrand framework for messaging and positioning |
-| [voice-engine](skills/voice-engine/) | Extract and codify a personal writing voice |
+| [hemingway](skills/hemingway/) | Persistent plain-style writing mode — short declarative sentences, no filler |
 
 ### Document Production
 | Skill | Description |
@@ -65,6 +65,8 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [xlsx](skills/xlsx/) | Generate Excel spreadsheets |
 | [annotatable-pdf-creation](skills/annotatable-pdf-creation/) | iPad-ready annotatable PDF format |
 | [publish-to-wordpress](skills/publish-to-wordpress/) | Publish posts to jeffreybeaumont.com via WordPress MCP |
+| [document-system](skills/document-system/) | Mandatory styling layer for every doc, deck, and sheet — load before docx/pptx/xlsx |
+| [pre-send-review](skills/pre-send-review/) | QA gate that reviews a finished doc, deck, or sheet against the document system |
 | [blog-graphic-design](skills/blog-graphic-design/) | Generate graphic design briefs for blog posts |
 
 ### Engineering Conventions (on-demand, load when in the domain)
@@ -95,6 +97,9 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [grill-me](skills/grill-me/) | Socratic interview against a document or argument |
 | [grill-with-docs](skills/grill-with-docs/) | Deep Q&A against a document set |
 | [walk-and-talk-interviewer](skills/walk-and-talk-interviewer/) | Voice-first interview workflow |
+| [elements-of-value-analysis](skills/elements-of-value-analysis/) | Bain/Almquist Elements of Value — inventory mapping and opportunity lens |
+| [burn-and-rebuild](skills/burn-and-rebuild/) | Ideation flow: top-10 / bottom-10, then burn them and rebuild from first principles |
+| [harvest-intel](skills/harvest-intel/) | Extract new facts and corrected assumptions from a conversation into the tracked subject's file |
 | [caveman](skills/caveman/) | Simplify complex concepts to plain language |
 
 ### Productivity & Chief of Staff
@@ -112,6 +117,19 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [decision-accountability](skills/decision-accountability/) | Standing — surface decisions that were made and then abandoned |
 | [weekly-review](skills/weekly-review/) | Weekly strategic pass across Todoist, Notes, and the project sheet |
 | [wins-rollup](skills/wins-rollup/) | Monthly wins synthesis across all active projects |
+| [daily-scan](skills/daily-scan/) | 5am notify-only sweep of Gmail, Calendar, and Todoist |
+
+### Meetings & Job Search
+
+> **[Meeting Intelligence plugin README](plugins/meeting-intelligence/)** explains how these fit together.
+
+| Skill | Description |
+|-------|-------------|
+| [meeting-intelligence](skills/meeting-intelligence/) | Full meeting lifecycle — prep, rehearsal, note capture, synthesis, self-eval |
+| [interview-scorecard](skills/interview-scorecard/) | Trend interview self-eval scores across calls |
+| [meeting-task-extract](skills/meeting-task-extract/) | Pull decisions and action items from any text and route them to Todoist |
+| [open-loop-sweep](skills/open-loop-sweep/) | Find dropped commitments and prepped-but-never-synthesized meetings |
+| [searchops-pulse](skills/searchops-pulse/) | Job-search pipeline pulse block for the weekly review |
 
 ### Project & Memory Management
 | Skill | Description |
@@ -121,6 +139,9 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [doc-coauthoring](skills/doc-coauthoring/) | Structured co-authoring workflow |
 | [setup-cowork](skills/setup-cowork/) | Configure Claude Cowork with role-matched plugins |
 | [consolidate-memory](skills/consolidate-memory/) | Merge duplicate memory files, fix stale facts |
+| [skill-audit](skills/skill-audit/) | Find repeated prompts worth a skill, and skills worth updating or retiring |
+
+**voice-engine** lives in its own private repository (`jeffsleft/voice-engine`) with its corpus and subagents; it is no longer copied here.
 
 ### Investing Tool — archived
 

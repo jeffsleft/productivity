@@ -1,134 +1,153 @@
 ---
 name: decision-accountability
 description: >
-  Reads the CoS Decision Log Apple Note and surfaces decisions that are overdue for follow-up, contradicted by open Todoist tasks, or silently abandoned. Run standalone or as part of the Friday CoS review. Use when Jeff says "check the decision log", "decision accountability", "what decisions are we tracking", or when called by the weekly-review or cos-sync skills.
-version: 1.0
+  Reads the CoS Decision Log file and surfaces open Todoist tasks or project files that contradict a logged decision. Also appends new decisions observed during a session. Run standalone or as part of the Friday CoS review. Use when Jeff says "check the decision log", "decision accountability", "what decisions are we tracking", "log a decision", or when called by the weekly-review or cos-sync skills.
+version: 2.0
 ---
 
 # Decision Accountability
-### Version 1.0 — June 2026
+### Version 2.0 — August 2026
 ### Part of: CoS Plugin
-### Platform: Claude Cowork + Apple Notes MCP + Todoist MCP
+### Platform: Claude Cowork / Claude Code + local filesystem + Todoist MCP
 
 ---
 
 ## What This Skill Does
 
-Closes the loop on decisions. Most decisions get made and then silently drift — either abandoned, reversed without acknowledgment, or blocked by open tasks that contradict them.
+**One job: catch the case where Jeff decided something and the system kept acting as if he hadn't.**
 
-This skill does three things:
-1. **Surfaces decisions due for follow-up** — any logged decision older than 2 weeks with no follow-up entry
-2. **Flags contradictions** — open Todoist tasks that conflict with a logged decision
-3. **Identifies abandoned decisions** — decisions made but never acted on, visible from task patterns
+That happens in two directions:
+1. An open Todoist task, project file, or load plan **contradicts** a logged decision.
+2. A CoS session **re-raises** a question the log already closed.
 
-Runs standalone or hooks into the Friday CoS review as a standing section.
+Both are failures of the same kind, and both waste Jeff's attention. Direction 2 is the more common one and the more annoying one.
+
+The skill also **appends** decisions observed during a session, so the log stays current without Jeff having to maintain it.
+
+---
+
+## ⚠️ WHAT THIS SKILL NO LONGER DOES — read before running
+
+**v1.0 counted staleness and reported it.** "The log is 38 days stale." Then 46. Then 53. It did this for four consecutive sessions and produced zero value, because:
+
+- The Apple Note it was reading **could not be resolved by name and probably never existed.** The v1.0 constants table listed the folder as `TBD`. The flags were unverifiable.
+- Even if it had existed, **silence is not a defect.** A week with no decisions logged means no decisions were made. That is normal.
+
+**Rules now:**
+- ❌ Do NOT report "the log is N days stale" or any variant.
+- ❌ Do NOT flag decisions as "due for follow-up" on a 14-day timer.
+- ❌ Do NOT flag decisions as "silently abandoned" on a 30-day timer.
+- ✅ DO report contradictions, in both directions.
+- ✅ DO append new decisions.
+- ✅ If the log has nothing to flag, say one line and move on.
+
+---
+
+## SOURCE OF TRUTH
+
+**Path:** `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/decision-log.md`
+
+Read it with `Read`. Append to it with `Edit`. No MCP, no paste step, no overwrite risk. **This is a plain file and it is directly writable — do not ask Jeff to paste anything into it.**
+
+Established 2026-08-28, replacing an Apple Note that was never confirmed to exist.
 
 ---
 
 ## Decision Log Format
 
-The Decision Log lives in Apple Notes. Jeff confirmed the folder at setup — see `CoS — Decision Log` note.
+Newest section on top, grouped by month. Each entry:
 
-Each entry follows this template:
-
-```
-[YYYY-MM-DD] — [Decision title]
-
-Decision: [What was decided, in one sentence]
-Why: [The reasoning or forcing function]
-Tradeoff: [What was given up or accepted]
-Reverses if: [What would cause this decision to be revisited]
-Horizon: [Short-term / Medium-term / Long-term]
-Follow-up: [Date + what to check — added after the fact]
+```markdown
+### YYYY-MM-DD — [Decision title]
+**Decision:** [What was decided, one or two sentences]
+**Why:** [Reasoning or forcing function]
+**Decided by:** [Jeff / a review / a named source]
+**Detail:** [File path or Todoist ID where the full context lives]
 ```
 
-Entries are newest-on-top. A `---` divider separates each entry.
+Optional lines, only when they carry weight:
+- `**Standing constraints:**` — rules that flow from the decision
+- `**Scope note:**` — what the decision does NOT cover
+- `**Open conflict:**` — a known contradiction not yet resolved
+
+Keep entries short. The log is an index of closed questions, not a narrative.
 
 ---
 
 ## HOW TO RUN
 
-### Step 1 — Read the Decision Log
+### Step 1 — Read the log
 
-Pull `CoS — Decision Log` from Apple Notes. Parse all entries. Extract:
-- Decision title
-- Date logged
-- Horizon
-- Whether a Follow-up line exists
-- Whether a follow-up date is past due
+Read the whole file. It is short by design. Build a working list of every decision and what it closes.
 
-### Step 2 — Pull open Todoist tasks
+### Step 2 — Check direction 1: does anything contradict a decision?
 
-Pull Jeff's open tasks (all projects, limit 100). Look for:
-- Tasks that appear to contradict a logged decision
-- Tasks in projects that were specifically mentioned in a decision
-- Tasks that are the expected "follow-through" action from a decision but don't exist
+Pull open Todoist tasks (all projects). Also scan the current load plan and any project files in scope for the session.
 
-### Step 3 — Produce the accountability report
+Look for:
+- A task whose **date, framing, or description** contradicts a logged decision. *Example caught 2026-08-28: "Figure out trees for on the hill" carried an 8/20 date against a logged Sept/Oct deferral.*
+- A task description that states a **blocker the log has already resolved**. *Example: an offsite task named a logistics issue as the blocker after Jeff had said the blocker was the job outcome.*
+- A project file or sheet row **still describing a question the log has closed**.
+
+### Step 3 — Check direction 2: is this session about to re-raise a closed question?
+
+Before any other CoS skill proposes a question, a coaching point, or a "still open" item, check it against the log.
+
+**A decision in the log closes the question. Do not re-litigate it, do not re-flag it, do not ask about it "one more time to be sure."**
+
+This check exists because the failure is documented and repeated:
+- Vercel commute / anchor days — closed 2026-08-14, raised again afterward. Jeff: *"stop asking, this is dumb."*
+- Self-ruleout language coaching — closed 2026-08-26, raised again 2026-08-28. Jeff: *"I don't know what you're talking about."*
+
+If a stale register, an old walk script, or a prior report still lists a closed item as open, **the log supersedes it**. Say so and move on.
+
+### Step 4 — Append decisions from this session
+
+Any decision Jeff made during the session goes into the log before session close. Do not ask permission to log a decision he plainly made; write it and show him the entry.
+
+Write it in his terms, not yours. Quote him when the wording matters.
+
+### Step 5 — Report
 
 ```
-DECISION ACCOUNTABILITY — [DATE]
+DECISION LOG — [DATE]
 
-DECISIONS DUE FOR FOLLOW-UP
-[Decisions logged more than 14 days ago with no Follow-up entry]
-- [YYYY-MM-DD] [Decision title] — [X days since logged]
-  Reverses if: [condition]
-  → Prompt: Has this played out as expected? Add a follow-up note.
+CONTRADICTIONS
+- [Task / file]: "[name]"
+  Contradicts: [Decision title] ([date])
+  → Proposed fix: [paste-ready replacement text or the specific Todoist edit]
 
-CONTRADICTIONS DETECTED
-[Open Todoist tasks that appear to conflict with a logged decision]
-- Task: "[Task name]" ([Project])
-  Conflicts with: [Decision title] ([date])
-  → Prompt: Is this task still valid, or should it be killed / updated?
+CLOSED — do not re-raise
+[Only list these when another part of the session was about to raise one.]
+- [Decision title] ([date]) — [what tried to re-raise it]
 
-SILENTLY ABANDONED
-[Decisions with no corresponding Todoist task and no follow-up, older than 30 days]
+LOGGED THIS SESSION
 - [YYYY-MM-DD] [Decision title]
-  → Prompt: Did this get acted on? Mark it followed-up or log a reversal.
-
-HEALTHY DECISIONS
-[N] decisions logged, [N] with follow-ups, [N] still pending.
 ```
 
-If nothing to flag: "Decision Log looks clean — no overdue follow-ups, no contradictions detected."
+If nothing to flag: **"Decision log clean — no contradictions."** One line. Nothing else.
 
-### Step 4 — Offer actions
-
-For each flagged item, offer:
-- "Add a follow-up note to this decision" → Jeff dictates; skill writes to the log
-- "Kill the contradicting task" → confirm, then delete via Todoist MCP
-- "Log a reversal" → Jeff explains why; skill adds a reversal entry to the log
+**Always draft the fix, never just the flag.** A contradiction reported without paste-ready replacement text gets re-flagged next session and nothing changes. This is a standing rule across the CoS plugin.
 
 ---
 
-## ADDING A NEW DECISION
+## LOGGING A DECISION MID-SESSION
 
-Jeff can log a decision mid-session:
-> "Log a decision: [decision text]"
+> "Log a decision: [text]"
 
-Skill asks for the missing fields (Why, Tradeoff, Reverses if, Horizon) in one block, then prepends the new entry to the top of the Decision Log note.
+Fill in Why / Decided by / Detail from session context. Only ask Jeff if a field genuinely cannot be inferred, and ask for all missing fields in **one** block. Then append and show the entry.
 
-Keep it fast — 60 seconds to log a decision, no ceremony.
+Sixty seconds, no ceremony.
 
 ---
 
 ## INTEGRATION WITH FRIDAY REVIEW
 
 When called from `weekly-review` or `cos-sync`:
-- Run Steps 1–3 silently
-- Insert the accountability report as a standing section in the Friday review output
-- Only surface items that require Jeff's attention — skip the "healthy decisions" count unless it's the only output
-
----
-
-## THRESHOLDS
-
-| Condition | Flag as |
-|-----------|---------|
-| Decision logged > 14 days, no follow-up | Due for follow-up |
-| Decision logged > 30 days, no follow-up, no corresponding task | Silently abandoned |
-| Open task appears to contradict a decision | Contradiction |
-| Decision has a "Reverses if" condition that now appears true | Revisit prompt |
+- Run Steps 1–4 silently.
+- **Run Step 3 before the review authors any questions or coaching points.** It is a gate on the rest of the session, not a section at the end.
+- Surface only contradictions and newly logged decisions. No counts, no health summary, no "N decisions tracked."
+- If there is nothing, contribute nothing. A clean log should add zero lines to the review.
 
 ---
 
@@ -136,32 +155,31 @@ When called from `weekly-review` or `cos-sync`:
 
 | Constant | Value |
 |----------|-------|
-| Decision Log note name | `CoS — Decision Log` |
-| Apple Notes folder | TBD — confirmed at note creation (see `Create "CoS — Decision Log" Apple Note` Todoist task) |
-| Follow-up window | 14 days |
-| Abandoned threshold | 30 days |
+| Decision log path | `[YOUR_PROJECTS_PATH]/Professional Development/cos-plugin/decision-log.md` |
+| Read method | `Read` tool, direct |
+| Write method | `Edit` tool, direct — append under the current month |
+| Staleness thresholds | **None. Removed in v2.0.** |
 
 ---
 
 ## TRIGGER PHRASES
 
-Run this skill when Jeff says any of:
 - "Check the decision log"
 - "Decision accountability"
 - "What decisions are we tracking"
-- "Any decisions I need to follow up on"
 - "Log a decision: [text]"
+- "Did I already decide this?"
 - Called automatically by `weekly-review` or `cos-sync`
 
 ---
 
 ## GRACEFUL DEGRADATION
 
-| Missing tool | Behavior |
-|-------------|---------|
-| Apple Notes MCP unavailable | Ask Jeff to paste the Decision Log content; run the analysis from the paste |
-| Decision Log note doesn't exist yet | Prompt: "The Decision Log note hasn't been created yet. Want me to set it up now?" Then create it with the template and one seed entry |
-| Todoist MCP unavailable | Run the log review only; skip contradiction detection; note the gap |
+| Missing | Behavior |
+|---------|---------|
+| Log file doesn't exist | Create it with the header and format above. Do not report this as a defect; just build it. |
+| Todoist MCP unavailable | Run Step 3 only (the re-raise gate). Skip Step 2. Note the gap in one line. |
+| Running somewhere without filesystem access | Say the log is unreachable and skip the section entirely. Do NOT fall back to guessing at staleness from other signals — that is the exact failure v2.0 removes. |
 
 ---
 
@@ -169,4 +187,5 @@ Run this skill when Jeff says any of:
 
 | Date | Change |
 |------|--------|
-| 2026-06-03 | v1.0 — created. Reads Decision Log Apple Note, surfaces overdue follow-ups, contradicting Todoist tasks, and silently abandoned decisions. Integrates with weekly-review and cos-sync as a standing section. |
+| 2026-06-03 | v1.0 — created. Read a `CoS — Decision Log` Apple Note; flagged overdue follow-ups, contradictions, and abandoned decisions. |
+| 2026-08-28 | v2.0 — **Source moved from Apple Notes to `cos-plugin/decision-log.md`.** The v1.0 note was never confirmed to exist (constants table listed the folder as `TBD`), so four sessions of staleness flags were unverifiable. **Removed all staleness, follow-up-timer and abandonment reporting** per Jeff — silence means no decisions were made, which is normal. **Added Step 3, the re-raise gate**, which is now the skill's primary job: stop other CoS skills from re-opening questions the log has closed. Log is now directly readable and writable, so decisions get appended automatically instead of being handed to Jeff to paste. |
