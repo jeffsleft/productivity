@@ -1,12 +1,12 @@
 ---
 name: meeting-intelligence
 description: >
-  Full meeting lifecycle management — prep, rehearsal (if needed), note capture, and post-meeting synthesis. Use when Jeff says "prep me for [meeting]", "meeting prep", "I have a meeting with [person]", "let's debrief [meeting]", "I need to prep for an interview", "write up my meeting notes", or any time a calendar event or Granola transcript needs to be turned into structured prep or follow-up. Covers all meeting types: Finance Team, 1:1s, GLM calls, ad hoc, and job search interviews.
-version: 2.2
+  Full meeting lifecycle management — prep, rehearsal (if needed), note capture, and post-meeting synthesis. Use when Jeff says "prep me for [meeting]", "meeting prep", "I have a meeting with [person]", "let's debrief [meeting]", "I need to prep for an interview", "write up my meeting notes", or any time a calendar event or Granola transcript needs to be turned into structured prep or follow-up. Covers any business meeting: client and consulting calls, discovery and sales conversations, partner and vendor meetings, internal 1:1s and team syncs, networking, job-search interviews, and ad hoc calls.
+version: 2.3
 ---
 
 # Meeting Intelligence
-### Version 2.2 — June 2026
+### Version 2.3 — October 2026
 ### Part of: Meeting Intelligence Plugin (standalone, event-triggered)
 ### Platform: Claude Cowork + Google Calendar MCP + Google Drive/Docs MCP + Apple Notes MCP + Todoist MCP
 
@@ -104,7 +104,7 @@ Pull in order of availability:
 - **Google Calendar** — event details, attendees, time, duration
 - **Google Docs** — prior meeting Docs for this person/meeting (`search_files` by meeting name, read the most recent)
 - **Todoist** — any open tasks related to this person or project
-- **Decision Log** — any logged decisions involving this person or topic (read `CoS — Decision Log` Apple Note)
+- **Decision Log** — any logged decisions involving this person or topic (the CoS Decision Log file; path in the `decision-accountability` skill)
 
 ### Step 3 — Generate the brief
 
@@ -164,7 +164,7 @@ After delivering the brief, offer:
 
 **Trigger:** Jeff says "yes" to the rehearsal offer, or invokes directly: "rehearse [meeting]" / "simulate [interview]" / "grill me on this"
 
-**When to use:** Interviews, high-stakes presentations, difficult conversations (e.g., performance feedback, budget asks, escalations).
+**When to use:** Interviews, client pitches, scope or pricing conversations, high-stakes presentations, difficult conversations (e.g., performance feedback, budget asks, escalations).
 
 ### Interview rehearsal mode
 
@@ -242,27 +242,29 @@ NOTES FOR NEXT MEETING
 
 ### Step 2 — Self-Evaluation (runs on EVERY call)
 
-This is not optional and not flattering. Evaluate how **Jeff** showed up, using the transcript and any Granola notes as evidence. Default register: **blunt — name what was weak, no softening, no praise sandwiches.** Jeff has explicitly asked to be coached hard here. Ground every judgment in a specific quote or moment from the transcript; never evaluate from impression alone. If the meeting was unrecorded (e.g. in-person Finance Team), say so and run the lighter version from Jeff's own recollection.
+This is not optional and not flattering. Evaluate how **Jeff** showed up, using the transcript and any Granola notes as evidence. Default register: **blunt — name what was weak, no softening, no praise sandwiches.** Jeff has explicitly asked to be coached hard here. Ground every judgment in a specific quote or moment from the transcript; never evaluate from impression alone. If the meeting was unrecorded (e.g. in person), say so and run the lighter version from Jeff's own recollection.
 
 **Which version to run:**
 - **Interview** (recruiter screen, hiring manager, panel, networking-with-intent) → run the **full scored rubric** below.
-- **Every other call** (1:1, team, GLM, ad hoc) → run the **3-line version** below.
+- **Every other call** (client, partner, vendor, 1:1, team, ad hoc) → run the **3-line version** below.
+
+**Never score a call twice.** Before writing a self-eval, search the `Meeting Notes` folder (and the relevant project folder) for an existing debrief of the same call. If one exists, reconcile with it instead of creating a second record.
 
 #### Full interview rubric
 
-Score each dimension **1–5** (1 = hurt you, 3 = competent, 5 = strong differentiator). Each score REQUIRES a supporting quote or moment from the transcript.
+Score each dimension **1–5** (1 = hurt you, 3 = competent, 5 = strong differentiator). Each score REQUIRES a supporting quote or moment from the transcript. These six dimensions match the `interview-scorecard` skill exactly, so scores trend across calls; use its counting rules for verbal discipline.
 
 ```
-SELF-EVALUATION — [Interview — Company — Role] — [YYYY-MM-DD]
+SELF-EVALUATION (FULL RUBRIC) — [Interview — Company — Role] — [YYYY-MM-DD]
 
 | Dimension | Score | Evidence (quote / moment) |
 |-----------|-------|---------------------------|
 | Narrative clarity — was the career story tight and led with the point? | _/5 | "..." |
 | Evidence & specificity — concrete metrics/proof vs. vague claims? | _/5 | "..." |
 | Question handling — answered what was asked, structured (STAR where apt), no rambling? | _/5 | "..." |
-| Executive presence — calm, concise, conviction without overclaiming? | _/5 | "..." |
 | Fit & differentiation — did he show why HIM specifically for THIS role? | _/5 | "..." |
 | Curiosity / questions asked — did his questions land as senior and informed? | _/5 | "..." |
+| Verbal discipline — density of fillers, hedges, self-diminishing tics per 1,000 words (see `interview-scorecard`) | _/5 | "..." |
 
 WEIGHTED READ: [1–2 sentences. The honest verdict — would this advance him? Where did he lose the room?]
 
@@ -315,7 +317,7 @@ After saving, offer to send the recap to attendees:
 If yes:
 - Pull attendees from the synthesis / calendar event.
 - Draft a SHORT recap (not the full notes): 2–3 line summary, the decisions, and each attendee's action items with owners + dates.
-- Tone = Jeff's internal-writing voice: direct, mission-linked, no filler.
+- Tone: internal attendees → Jeff's `internal-writing` voice; clients, partners and other external attendees → `public-writing` voice. Either way: direct, no filler.
 - **Draft only — do NOT send.** Hand Jeff the draft + the channel, let him send. (Approval threshold: never send a message on Jeff's behalf without explicit go.)
 
 Then close:
@@ -343,12 +345,13 @@ Then close:
 
 | Meeting | Type | Recorded? | Notes |
 |---------|------|-----------|-------|
-| Finance Team Weekly | Alignment | No | In-person; manual notes only |
-| 1:1 with manager | Alignment / Decision | No | Leadership |
-| GLM calls | Informational / Alignment | Varies | Multiple stakeholders |
-| Monthly peer call | Informational | Maybe | Personal/professional peer |
-| Ad hoc calls | Varies | Varies | Classify at prep time |
-| Job search interviews | Decision-making | No | Full rehearsal + debrief |
+| Client / consulting call | Alignment or Decision-making | Varies | Prep pulls what we owe them, open asks, and scope/commercial context. Recap goes external — draft only. |
+| Discovery / sales conversation | Informational → Decision-making | Varies | Goal = a clear next step. Rehearsal useful. |
+| Partner / vendor meeting | Alignment / Decision-making | Varies | Record commitments on both sides, with dates. |
+| Internal 1:1 / team sync | Alignment | Varies | Recurring — pull last occurrence's open items. |
+| Networking / peer call | Informational | Maybe | Full rubric only if networking-with-intent (career positioning). |
+| Job-search interview | Decision-making | Varies | Full rehearsal + debrief + full rubric. |
+| Ad hoc | Varies | Varies | Classify at prep time. |
 
 ---
 
@@ -382,6 +385,7 @@ Run this skill when Jeff says any of:
 
 | Date | Change |
 |------|--------|
+| 2026-10-12 | v2.3 — **Generalized to all business meetings; Mercy Ships removed.** New meeting-type table (client, discovery, partner/vendor, internal, networking, interview, ad hoc). Interview rubric aligned to `interview-scorecard`: "executive presence" replaced by verbal discipline; full-rubric heading labeled `SELF-EVALUATION (FULL RUBRIC)`. Added never-score-twice check. Decision Log now read from the CoS decision-log file. Recap tone splits internal vs external. |
 | 2026-06-03 | v1.0 — created. Four-phase meeting lifecycle: prep, rehearsal, notes, synthesis. Covers all Jeff's meeting types: Finance Team, 1:1s, GLM, ad hoc, interviews. Apple Notes primary output; flexible. Built from Breunsbach typology and existing csm-pro-v2 meeting-prep-briefing skill. |
 | 2026-06-05 | v2.0 — Extracted from CoS plugin into its own standalone **Meeting Intelligence plugin**. Event-triggered (per-meeting), not part of the Monday/Friday button cadence. Kept as ONE skill — the 4 phases are a single sequential lifecycle, not sub-skills (Opus review 2026-06-05). Old cos-plugin copy archived. Phase-build queue (synthesis-as-tail, open-loop detection, growth capture, etc.) tracked in features.json. |
 | 2026-06-08 | v2.2 — (1) **Recap distribution folded into core** (Phase 4 Step 5) — offers an attendee-ready recap email/Slack draft; draft-only, never auto-sends. (2) task-extract also folded into core (synthesis already extracts tasks). (3) Record folder renamed `Meeting Intelligence` → **`Meeting Notes`** (avoided collision with plugin source folder). open-loop-sweep + interview-scorecard logged as future separate skills. |

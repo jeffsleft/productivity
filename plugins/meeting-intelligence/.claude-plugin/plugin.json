@@ -1,6 +1,6 @@
 {
   "name": "meeting-intelligence",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Event-triggered meeting lifecycle: prep, optional rehearsal, note capture, and post-meeting synthesis with a blunt self-evaluation on every call. Records to Google Docs; routes action items to Todoist.",
   "author": {
     "name": "Jeff Beaumont"
