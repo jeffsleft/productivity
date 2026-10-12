@@ -1,10 +1,10 @@
 ---
 name: "weekly-review"
-description: "Run a structured Sunday review across Todoist, Apple Notes, the Master Projects sheet, and calendar. Combines a strategic altitude check (am I working on the right things?) with the full operational Todoist audit that assigns priorities/dates and schedules the week's tasks. Priority areas: the Encore consulting engagement, the job search, and Auburn admin close-out. Produces a weekly recap, program-alignment gate, full task audit + load plan, app & AI work tracker, decision accountability, 2-week horizon scan, a brief Auburn pulse, and a config integrity check. Trigger when Jeff says 'run my weekly review', 'weekly review', 'strategic review', 'Sunday review', or 'altitude check'."
+description: "Run a structured Sunday review across Todoist, Apple Notes, the Master Projects sheet, and calendar. Combines a strategic altitude check (am I working on the right things?) with the full operational Todoist audit that assigns priorities/dates and schedules the week's tasks. Priority areas, in order: the job search, Auburn (house build + admin close-out), and the Encore consulting engagement. Produces a weekly recap, program-alignment gate, full task audit + load plan, app & AI work tracker, decision accountability, 2-week horizon scan, a brief Auburn pulse, and a config integrity check. Trigger when Jeff says 'run my weekly review', 'weekly review', 'strategic review', 'Sunday review', or 'altitude check'."
 ---
 
 # Weekly Review Skill
-### Version 2.8 — October 2026
+### Version 2.9 — October 2026
 ### Part of: Weekly Review Plugin (standalone, strategic track)
 ### Platform: Claude Cowork + Todoist MCP + Apple Notes MCP + Google Drive (Master Projects sheet) + Google Calendar MCP
 
@@ -17,13 +17,12 @@ The **Sunday** review. Two jobs in one sitting:
 1. **Strategic altitude** — *am I actually moving on the things that matter?* Checked against the **Master Projects sheet** (the program/goals layer), not just the task list.
 2. **Operational planning** — the **Todoist audit** that assigns priorities/dates/labels and **schedules the week ahead**. This is the point of Sunday.
 
-**Priorities (ruled 2026-09-06 — supersedes the prior order):**
-1. **Encore consulting engagement** — executed contract, 13-week term, zero slack, ends 2026-11-28
-2. **Job search** — both processes are late-stage and need *touchpoints, not depth*
-3. **Home Setup & house build** — fence, retaining wall, shed
-4. **Auburn admin close-out** — residual, has not moved in ten months
+**Priorities (ruled 2026-10-12 — supersedes the 2026-09-06 Encore-first order):**
+1. **Job search** — both processes are late-stage and need *touchpoints, not depth*
+2. **Auburn** — one bucket: Home Setup & house build (fence, retaining wall, shed) plus the admin close-out (residual, has not moved in ten months)
+3. **Encore consulting engagement** — executed contract, 13-week term, ends 2026-11-28. Lower weight does not mean optional: its hard dates still get scheduled.
 
-Revert to job-search-first when the Encore term ends or a role is signed.
+Mercy Ships is done and carries no weight.
 
 Run **Sunday ~4pm**. Produces a saved markdown report plus the outputs below.
 
@@ -148,7 +147,7 @@ Revisit this model whenever household coverage changes.
 **Other scheduling rules:**
 - Working window and fixed family commitments (school drop-off and pickup times): `[YOUR_SCHEDULE]`.
 - Exclude "BLOCK - DNB" / "Focus Time."
-- **Priority weight: Encore → job search → house build → Auburn admin** (see the priorities block above).
+- **Priority weight: Job search → Auburn (house build + admin) → Encore** (see the priorities block above).
 - **Respect the weekly rhythm:** Mon–Tue take the heavy thinking; Wed suits the AI-leverage batch and email; Thu is lower-intensity; Fri stays light and family-weighted. Keep the back half loose while a live loop is running.
 - **Leave 25–35% headroom.** A calendar with no meetings on it is not a free week — it is an unscheduled one, and the meetings land with no notice.
 - **The `needtoschedule` label comes OFF the moment a task gets a date.**
@@ -191,9 +190,9 @@ Scan the next 14 days across calendar, Todoist due dates and deadlines, and the 
 
 **Check every run:**
 - **Todoist `deadlineDate` fields, not just due dates.** A task can be due in two weeks and have a hard deadline this week — that combination hides.
-- **Encore gates** — Gate 1 (question set approval, W4), Gate 2, invoice dates, and the 2026-11-28 term end.
 - **Job search** — interview loops, follow-ups, references. Flag anything time-sensitive with no next action.
-- **Auburn admin close-out** — flag any item with a hard date and no active task.
+- **Auburn** (house build + admin close-out) — flag any item with a hard date and no active task.
+- **Encore gates** — Gate 1 (question set approval, W4), Gate 2, invoice dates, and the 2026-11-28 term end.
 - **An empty calendar is itself a finding.** If there are live processes and no meetings booked, say so.
 
 Format (max 6 lines): 🔴 ≤7 days, no task/prep · 🟠 8–14 days, prep now · 🟡 known horizon item with no active task.
@@ -282,4 +281,4 @@ Confirm all paths to the user.
 | 2026-08-12 | v2.6 — Added Step 10 Config Integrity Check. |
 | 2026-09-06 | v2.7 — **Capacity model rewritten**: 9–10 h total day *including* unlogged domestic load, yielding ~6.5 h Todoist-visible on a school day and ~4.5 h on a holiday. Replaces the wrong 8.5 h figure. **Priority order changed to Encore-first** by Jeff's ruling. **Decision-log path corrected** to `cos-plugin/decision-log.md` (Step 7). **Sheet maintenance now produces a TSV paste-over file** instead of cell-by-cell values. Added: holiday check in Step 1, dead-task handling changed from delete to close-with-comment, vague tasks get dated + commented, `deadlineDate` check in the Horizon Scan, empty-calendar-is-a-finding rule, MCP-failure reporting in Step 10, arithmetic-verification rule in Step 5b, load-plan archiving before overwrite, and the Apple Notes `&` folder bug. |
 | 2026-10-12 | v2.8 — **Slack removed**: the review no longer posts or drafts a Slack summary. Output is the saved report and the in-session summary only. |
-
+| 2026-10-12 | v2.9 — **Priority order changed to Job search → Auburn → Encore** (Jeff, 2026-10-12). House build folded into the Auburn bucket. Removed the revert-when-Encore-ends rule; Mercy Ships carries no weight. |

@@ -57,12 +57,11 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [hemingway](skills/hemingway/) | Persistent plain-style writing mode — short declarative sentences, no filler |
 
 ### Document Production
+
+For .docx, .pdf, .pptx and .xlsx files, use Anthropic's built-in file skills; they are no longer copied here.
+
 | Skill | Description |
 |-------|-------------|
-| [docx](skills/docx/) | Generate .docx documents |
-| [pdf](skills/pdf/) | Generate PDFs |
-| [pptx](skills/pptx/) | Generate PowerPoint presentations |
-| [xlsx](skills/xlsx/) | Generate Excel spreadsheets |
 | [annotatable-pdf-creation](skills/annotatable-pdf-creation/) | iPad-ready annotatable PDF format |
 | [publish-to-wordpress](skills/publish-to-wordpress/) | Publish posts to jeffreybeaumont.com via WordPress MCP |
 | [document-system](skills/document-system/) | Mandatory styling layer for every doc, deck, and sheet — load before docx/pptx/xlsx |
@@ -89,7 +88,6 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [lessons-learned](skills/lessons-learned/) | Log technical failures and fixes at session end |
 | [lessons-learned-review](skills/lessons-learned-review/) | Promote lessons to permanent AI_RULES |
 | [pre-ship-security-checklist](skills/pre-ship-security-checklist/) | Security checklist before deploying any app |
-| [skill-creator](skills/skill-creator/) | Scaffold a new Claude Code skill |
 
 ### Research & Analysis
 | Skill | Description |

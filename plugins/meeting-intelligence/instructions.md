@@ -1,5 +1,5 @@
 # Meeting Intelligence Plugin — Instructions
-### Last updated: 2026-06-05
+### Last updated: 2026-10-12
 ### Platform: Claude Cowork
 
 ---
@@ -10,7 +10,7 @@ An **event-triggered** meeting lifecycle system. One skill, `meeting-intelligenc
 
 Unlike the strategic (Weekly Review) and operational (CoS) plugins, this one is **not** a Monday/Friday button. It fires per-meeting, whenever a calendar event or Granola transcript needs to become structured prep or follow-up.
 
-**Designed for:** Mercy Ships meetings now (Finance Team, 1:1s, GLM, ad hoc); job-search interviews fall 2026.
+**Designed for:** any business meeting — client and consulting calls, discovery/sales, partner and vendor meetings, internal 1:1s and team syncs, networking, job-search interviews, and ad hoc calls.
 
 **Framework:** Jeff Breunsbach meeting typology — Informational / Alignment / Decision-making.
 
@@ -50,27 +50,24 @@ It does not consume a "button" — it's invoked by meeting events.
 
 The known failure mode: **the back half silently never runs.** After a meeting ends, synthesis and follow-up get skipped because attention moves on. The fix is NOT structural — it's lifecycle completion:
 
-1. **Synthesis is the tail of capture.** Finishing NOTE CAPTURE flows automatically into SYNTHESIS + FOLLOWUP in the same run, no separate trigger. (Todoist `6gpCh9c5Prgc92Q3`)
-2. **Prepped-but-never-synthesized detection.** Surface open loops in the meeting pulse. (Todoist `6gpCh9hfhx6pRRC3`)
+1. **Synthesis is the tail of capture.** Finishing NOTE CAPTURE flows automatically into SYNTHESIS + FOLLOWUP in the same run, no separate trigger. (Todoist [TODOIST_TASK_ID])
+2. **Prepped-but-never-synthesized detection.** Surface open loops in the meeting pulse. (Todoist [TODOIST_TASK_ID])
 
 These are the heart of the build. Everything else is enhancement.
 
 ---
 
-## Apple Notes Structure
+## Where Records Live
 
-All meeting notes live in: **Apple Notes → Chief of Staff → Voice Memo Reflections → Meetings**
-
-- Recurring meetings → one persistent note per meeting, newest entry on top
-- One-off / ad hoc → single dated note: `[YYYY-MM-DD] Meeting Name`
-- Interviews → `[YYYY-MM-DD] Interview — [Company] — [Role]`
+- **Per-meeting record:** one Google Doc per call in the `Meeting Notes` Drive folder — `[YYYY-MM-DD] Meeting Name`, or `[YYYY-MM-DD] Interview — [Company] — [Role]`.
+- **Running logs** (Growth Log, Job-Search Pipeline, Operating Manual): Apple Notes, because they need in-place append.
 
 ---
 
 ## Known Gotchas
 
 - **Granola = paste-in only, no MCP.** Transcripts are pasted manually into Claude. No automated pull.
-- **In-person meetings (Finance Team) are unrecorded** — captured via manual notes / iPhone, not Granola.
+- **In-person meetings are often unrecorded** — captured via manual notes / iPhone, not Granola. Self-eval runs the lighter version from recollection.
 - **Calendar PREP trigger** depends on Google Calendar MCP being connected.
 
 ---
@@ -92,4 +89,4 @@ meeting-intelligence-plugin/
 
 ## Build Queue
 
-Tracked in `features.json`. Source of truth for *intent* is the Todoist parent task `6gJCR8wh8j5qMMjV` (Meetings Agent) and its 13 subtasks under the AI Agents project. Work one item at a time per the Multi-Session Project Protocol; update `features.json` status and `HANDOFF.md` at each session close.
+Tracked in `features.json`. Source of truth for *intent* is the Todoist parent task [TODOIST_TASK_ID] (Meetings Agent) and its 13 subtasks under the AI Agents project. Work one item at a time per the Multi-Session Project Protocol; update `features.json` status and `HANDOFF.md` at each session close.
