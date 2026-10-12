@@ -1,10 +1,10 @@
 ---
 name: "interview-scorecard"
-description: "Trends Jeff's interview and networking-with-intent self-eval scores across Google Drive meeting Docs. Use when Jeff says \"how am I trending in interviews?\", \"interview scorecard\", \"show me my interview pattern\", \"what am I consistently weak on?\", or \"pull my scorecard.\" Reads SELF-EVALUATION (FULL RUBRIC) sections from Meeting Notes Docs in Google Drive, aggregates 6-dimension scores across all logged calls, surfaces recurring weak spots, momentum, and one prioritized coaching focus."
+description: "Trends Jeff's interview and networking-with-intent self-eval scores across Google Drive meeting Docs and project-folder debriefs. Use when Jeff says \"how am I trending in interviews?\", \"interview scorecard\", \"show me my interview pattern\", \"what am I consistently weak on?\", or \"pull my scorecard.\" Aggregates 6-dimension scores across all logged calls, surfaces recurring weak spots, momentum, and one prioritized coaching focus."
 ---
 
 # Interview Scorecard Skill
-### Version 1.3 — August 2026
+### Version 1.7 — September 2026
 ### Part of: Meeting Intelligence Plugin
 ### Platform: Claude Cowork + Google Drive MCP + (optional) Todoist MCP
 
@@ -12,7 +12,13 @@ description: "Trends Jeff's interview and networking-with-intent self-eval score
 
 ## What This Skill Does
 
-Aggregates the per-interview self-evaluation scores that the Meeting Intelligence skill logs into Google Drive after every interview or networking-with-intent call. The core meeting-intelligence skill scores ONE call; this skill trends MANY — surfacing which dimensions are stuck, which are improving, and what to prioritize before the next conversation.
+The Meeting Intelligence skill scores ONE call. This skill trends MANY: it aggregates the per-call self-evaluations across every interview or networking-with-intent call and shows which dimensions are stuck, which are improving, and what to prioritize before the next conversation.
+
+**This file is method only, and company-agnostic.** Jeff's call history, patterns and company-specific rulings live in the data file below. Never write company names, people, call-by-call scores or project paths into this skill.
+
+**Data file:** `~/Documents/Claude/Projects/Interviews/interview-scorecard-data.md` (the connected **Interviews** folder).
+- Read it at the start of every run, and update it at the end.
+- If it can't be reached, say so and ask Jeff to connect the folder. Don't rebuild history from memory.
 
 **Trigger phrases:**
 - "How am I trending in interviews?"
@@ -24,95 +30,110 @@ Aggregates the per-interview self-evaluation scores that the Meeting Intelligenc
 
 ---
 
-## ⚠️ STEP 0 — DRIVE IS THE SOURCE OF TRUTH, NOT THIS FILE
+## ⚠️ STEP 0 — THE SOURCES OF TRUTH
 
-**Always rebuild the table from Google Drive. Never generate a scorecard from the KNOWN DATA POINTS block below.**
-
-That block is a convenience snapshot and it has gone stale before. In August 2026 it was found to be three calls behind — it listed five evals "as of 2026-07-15" while Drive held eight. Any scorecard built from the snapshot under-reported the call count and misstated every average.
-
-**If the Drive-derived table disagrees with the snapshot, Drive wins.** After any run where they disagree, update the snapshot in this skill (via `save_skill` with `overwrite: true`) so the drift does not compound.
-
-**Also check the project folder, not just Drive.** Some panel and interview debriefs are written as `.docx` into the relevant project folder (e.g. `[Company]/Interview-Prep/`) and never reach the Meeting Notes Drive folder. These contain full rubric scores and are invisible to a Drive-only search. Before scoring a call, search the project folder for an existing debrief — **scoring a call that already has a scorecard produces two conflicting records, which is worse than no record.** If one exists, reconcile rather than replace.
+1. **Drive and the project folders are the source of truth.** The snapshot table in the data file is a convenience copy, and it has gone stale before. If it disagrees with Drive or the project folders, they win. Update the snapshot after any run where they disagree.
+2. **Check the project folders, not just Drive.** Panel, interview and founder-round debriefs are often written as `.md` or `.docx` files into a project folder and never reach the Meeting Notes Drive folder. The data file lists the current locations.
+3. **Never score a call twice.** Before scoring, search for an existing debrief. Two conflicting records are worse than none. If one exists, reconcile with it rather than replacing it.
+4. **Check for correction Docs.** The Drive connector can't edit a Doc in place, so corrections are filed as a separate `YYYY-MM-DD Correction — …` Doc next to the original. The correction wins.
+5. **Apply the data file's company-specific standing rulings** when scoring a call with that company.
 
 ---
 
 ## What Counts as a Scoreable Call
 
-Only calls where the **full 6-dimension rubric** was run. These are:
-- Job search interviews (recruiter screen, hiring manager, panel, exec)
-- Networking-with-intent calls (calls where Jeff was actively exploring a role or positioning himself to someone who could refer or vouch for him)
+Only calls where the **full 6-dimension rubric** was run:
+- **Job search interviews:** recruiter screen, hiring manager, panel, exec.
+- **Networking-with-intent calls:** Jeff was actively exploring a role, or positioning himself with someone who could refer or vouch for him.
+- **Founder or principal conversations inside a live process,** even when framed as a catch-up. If the other party can decide, it's scoreable.
 
-**Not scored:** internal Mercy Ships meetings, Finance Team calls, peer check-ins with no career positioning dimension. These get the 3-line eval in the meeting Doc, not the rubric.
+**Not scored:** internal work meetings, finance-team calls, and peer check-ins with no career positioning. These get the 3-line eval in the meeting Doc, not the rubric.
 
-The meeting-intelligence skill labels these clearly in the Doc: `SELF-EVALUATION (FULL RUBRIC)` vs. `SELF-EVALUATION` (3-line).
+The meeting-intelligence skill labels the two kinds in the Doc: `SELF-EVALUATION (FULL RUBRIC)` vs. `SELF-EVALUATION` (3-line).
 
 ---
 
 ## The Six Dimensions — and What They Actually Measure
 
-Five of the six dimensions are about *what was said* and survive a cleaned speech-to-text transcript well: narrative clarity, evidence & specificity, question handling, fit & differentiation, and curiosity. Score those 1–5 as before (1 = hurt you, 3 = competent, 5 = strong differentiator), each tied to a transcript moment.
+Five dimensions are about *what was said*, so they hold up on a cleaned speech-to-text transcript:
+- narrative clarity
+- evidence & specificity
+- question handling
+- fit & differentiation
+- curiosity
 
-The sixth dimension is different, and the difference matters. It used to be "executive presence" — calm, bearing, tone, pacing, how the room felt. That was a mistake to score from a transcript: a transcript can't hear tone or see the room, so any number was really a guess dressed up as a measurement, and it was the column most corrupted by transcription noise. Jeff called this out. So the sixth dimension is now something a transcript *can* measure honestly.
+Score each 1–5 (1 = hurt you, 3 = competent, 5 = strong differentiator), tied to a moment in the transcript.
+
+**Scoring rules for these five:**
+- **Before scoring a line as a question Jeff didn't answer, read the lines before and after it.** Sometimes the other person describes something their team is still working out, then extends it to Jeff ("what does success look like for this role… I'd want that for you too"). That's an invitation, not a question waiting for a live answer.
+- **Size evidence coaching to the target company.** Big-company metrics don't connect at a small company, so don't prescribe them as the fix. Coach toward proof that matches the target company's actual problems.
+- **Note whether the interviewer is a stranger or someone Jeff already knows.** His register differs between the two. For acquaintance rounds, explain the Fit & differentiation score, don't just record it.
 
 ### Dimension 6 — Verbal discipline (tic density)
 
-**What it measures:** how tight the language is — the density of fillers, hedges, weakeners, and self-diminishing tics. This is a real, countable proxy for composure, and it happens to be the exact behavioral residue of Jeff's core defect: when answers are composed live instead of pre-built, they fill with "kind of," "I guess," and "or whatever." Fewer tics ≈ pre-built, confident delivery.
+This used to be "executive presence." A transcript can't hear tone or see the room, so it was replaced with something a transcript *can* measure honestly.
 
-**Count these markers (normalize per 1,000 words so long calls don't auto-lose):**
-- **Fillers** *(raw/verbatim transcript only)*: um, uh, you know, like (as filler), I mean
+**What it measures:** the density of fillers, hedges, weakeners and self-diminishing tics per 1,000 words. It's a countable stand-in for composure: answers composed live fill up with "kind of," "I guess" and "or whatever," and prepared answers don't.
+
+**Count these markers:**
+- **Fillers** *(raw or verbatim transcripts only)*: um, uh, you know, like (as filler), I mean
 - **Hedges / weakeners**: kind of, sort of, I guess, maybe, probably, just, a little bit, whatever, or something, that kind of thing, I think (when it softens rather than asserts)
-- **Apology / self-diminishing tics**: sorry, I don't want to bore you, I don't know, this is probably wrong
-- **Self-ruleouts / rejection scripts** (e.g., "there's no way anyone knows how to spell AI over there")
+- **Apology / self-diminishing tics**: sorry, I don't want to bore you, I don't know, this is probably wrong, that might sound weird, I can't remember, I don't mean this in an offensive way
+- **Validation-seeking closers**: "is that what you're looking for?", "does that make sense?", "I hope". These cluster at the end of long answers and point to answer *length*, not low confidence.
 
-**Exclude — do not count:**
-- **Stutter double-renders** ("if all if all," "is there a is there a"). Speech-to-text artifacts, not disfluencies Jeff produced.
-- Legitimate uses of the same words when they carry real meaning. **"just" is the biggest offender here** — it appears 13–14 times in a typical Jeff transcript and most instances are assertive ("we just have to build it"), not softening. Read each one; do not regex it blindly.
+**Do not count:**
+- **Stutter double-renders** ("if all if all," "I think I think"). These are transcription artifacts, not something Jeff said.
+- **Self-ruleouts** ("maybe you don't need this role"). This is deliberate strategy on Jeff's part, locked 2026-08-26. Score it neutral and never re-flag it. If a specific instance costs him something concrete, log that instance on its own merits.
+- **Words used for their real meaning.**
+  - "just" appears 13–25 times in a typical transcript. Most uses are assertive ("we just have to build it") or spoken in a quoted or hypothetical voice ("I just want a walled garden").
+  - About a third of "I think" uses are assertive too.
+  - Read each one; don't count them automatically.
 
-### ⚠️ Two metrics, and only one of them is scored
-
-**Raw and cleaned transcripts are not comparable, and the published bands were calibrated on cleaned output.**
+### ⚠️ Two metrics, only one scored
 
 | Metric | What it is | Use |
 |---|---|---|
-| **Hedge density** — hedges + weakeners + apology tics + self-ruleouts, per 1,000 words | Survives every transcript type | **This is the scored metric.** Comparable across the whole pipeline. |
-| **Raw filler density** — the above plus um/uh/you know/filler-like | Requires a verbatim transcript | **Logged, not scored,** until enough raw calls exist to re-derive bands. |
+| **Hedge density**: hedges + weakeners + apology tics + validation closers, per 1,000 words | Works on every transcript type | **The scored metric** |
+| **Raw filler density**: um / uh / you know / filler "like" / "I mean", per 1,000 words | Needs a verbatim transcript | **Logged, not scored,** until enough raw calls exist to re-derive the bands |
 
-**Score bands — apply to HEDGE density only:**
-- 5/5 — <5 — crisp, pre-built delivery
+**Score bands (hedge density only):**
+- 5/5 — under 5
 - 4/5 — 5–10
 - 3/5 — 10–18
 - 2/5 — 18–28
-- 1/5 — >28
+- 1/5 — over 28
 
-Applying these bands to a raw filler count drags the score down roughly two bands and produces a false flat trend. Observed raw densities (34.3 and 23–25 per 1,000) both land at 1–2/5 while the comparable hedge metric shows 3/5 and 4/5 — a real improvement that the raw number hides.
+Applying these bands to a raw filler count drags scores down about two bands.
 
-**Reporting:** cite the density band and representative markers with counts (e.g., "kind of ×3, whatever ×4, one apology tic"), so the score is auditable rather than felt. Report both numbers; score only the hedge one.
+**Reporting:**
+- Cite the band and the markers with counts (e.g., "kind of ×3, whatever ×4"), so the score can be audited.
+- Report both metrics; score only hedge density.
+- **If the count is within about 1 point of a band boundary, run a sensitivity check:** drop the most debatable marker class, recompute, and state whether the band holds.
 
 ---
 
-## STEP 1 — Pull All Scoreable Docs from Google Drive
+## STEP 1 — Pull All Scoreable Docs
 
-The Meeting Notes folder ID is `[YOUR_DRIVE_FOLDER_ID]`.
+The Meeting Notes Drive folder ID is `[YOUR_MEETING_NOTES_FOLDER_ID]`.
 
 ```
-search_files: parentId = '[YOUR_DRIVE_FOLDER_ID]' and fullText contains 'FULL RUBRIC'
+search_files: parentId = '[YOUR_MEETING_NOTES_FOLDER_ID]'
 ```
 
-Broaden if that returns fewer than the known count:
-```
-search_files: fullText contains 'SELF-EVALUATION' or title contains 'Self-Eval' or title contains 'Interview'
-```
+The folder is small enough to list in one page. Not every scoreable Doc uses the heading `SELF-EVALUATION (FULL RUBRIC)`; some use `Scored Rubric` or `Scorecard`. If the count looks short, search on the dimension names.
 
-Note that not every scoreable Doc uses the literal string `SELF-EVALUATION (FULL RUBRIC)` in its heading — several use `Part 1 — This Call: Scored Rubric` instead. Search on rubric *dimension names* if a count looks short.
+**Then check the project folders listed in the data file.**
 
-Read each matching Doc in full. Extract:
-- **Doc title** (date + call name/company/role)
-- **Call date**, **call type**, **scores for all 6 dimensions**
-- **Weighted read**, **two things to sharpen**, **one thing that worked**
-- **Whether the transcript was raw or cleaned** — needed to interpret Dimension 6
-- **Whether the recording was complete or partial** — a partial recording is not a like-for-like data point
+From each Doc, extract:
+- title
+- call date and call type
+- all 6 scores
+- weighted read, two things to sharpen, and one thing that worked
+- whether the transcript was raw, cleaned or partially cleaned
+- whether the recording was complete or partial
+- the company, and whether the interviewer was a stranger or someone Jeff already knows
 
-If a Doc has the rubric but a dimension is blank, note it as `—` and exclude it from that dimension's average.
+A blank dimension is `—` and is excluded from that dimension's average.
 
 ---
 
@@ -136,6 +157,7 @@ TREND READ
   Stuck (avg ≤ 3.0, no upward movement)
   Improving (upward across 2+ calls)
   Consistent strength (avg ≥ 4.0)
+  Regressing (was locked high, now falling) — flag these hardest
 
 RECURRING SHARPEN-POINTS
   [Pattern] — appeared in [N] of [N] calls
@@ -147,41 +169,44 @@ WEIGHTED READ HISTORY
   [YYYY-MM-DD] [Call]: "[verdict]"
 ```
 
+**Then update the data file:** the snapshot table, transcript provenance, the pattern, and a dated history line. Company-specific rulings go in the data file, never in this skill.
+
 ---
 
 ## STEP 2.5 — Push to SearchOps (interview_sessions sync)
 
-**Added v1.3, 2026-08-12.** SearchOps (Jeff's job-search tracker, `recruiting-engine`) has an `interview_sessions` table that's a separate system of record from these Meeting Notes Docs. This step pushes each scoreable call from STEP 1 into SearchOps so the SearchOps dashboard (`/settings/interviews`, once built) reflects real interview activity instead of drifting out of sync. This is the "Google Drive Bridge" sync mechanism decided in `docs/outcome-charter-interview-sync.md` in the recruiting-engine repo — chosen over a Manual Intake form or a live MCP write-back specifically so this happens with zero new action from Jeff.
-
-**For each scoreable Doc pulled in STEP 1** (skip ones already synced — see dedup note below), POST to:
+SearchOps is Jeff's job-search tracker (`recruiting-engine`), and it has an `interview_sessions` table. Push every scoreable call from STEP 1 on every run. The endpoint dedupes on `(company, date, mode)`, so re-sending a call that's already there is safe.
 
 ```
-POST [YOUR_APP_URL]/api/sync/interview-session
+POST [YOUR_SEARCHOPS_URL]/api/sync/interview-session
 Headers:
   Content-Type: application/json
   X-Requested-With: XMLHttpRequest
   Authorization: Bearer <SearchOps sync credential>
 Body:
 {
-  "company": "<company or org name from the Doc>",
-  "date": "<call date, YYYY-MM-DD>",
+  "company": "<company or org name>",
+  "date": "<YYYY-MM-DD>",
   "mode": "prep" | "live" | "debrief",
   "questions_covered": ["<question text>", ...],
   "self_eval_scores": {"narrative_clarity": <1-5>, "evidence_specificity": <1-5>, "question_handling": <1-5>, "verbal_discipline": <1-5>, "fit_differentiation": <1-5>, "curiosity_questions": <1-5>},
-  "notes": "<weighted read + two things to sharpen + one thing that worked, combined>",
-  "transcript": "<full transcript if the Doc contains one, else omit>"
+  "notes": "<weighted read + two things to sharpen + one thing that worked>",
+  "transcript": "<full transcript if available, else omit>"
 }
 ```
 
-**Mode mapping:** an interview call (recruiter/HM/panel/exec) → `"live"`. Prep/mock-interview conversations → `"prep"`. Post-interview debrief-only notes with no live call → `"debrief"`. Networking-with-intent calls → `"live"` (they run the full rubric like an interview).
+**Mode:**
+- Interviews and networking-with-intent calls → `"live"`.
+- Prep and mock interviews → `"prep"`.
+- Debrief-only notes with no live call → `"debrief"`.
 
-**Field note:** `self_eval_scores` uses `verbal_discipline` for Dimension 6, matching the v1.1 redefinition (tic density, not executive presence). Score the hedge-density metric per the bands above, not the raw filler count.
+**Scores:** leave out any dimension scored `—`; don't send it as null. `verbal_discipline` takes the hedge-density score.
 
-**Credential:** the `Authorization` header value is the SearchOps app password. It is **not** stored in this skill file. Jeff configures it separately in whatever secure mechanism this session has available for it (do not ask Jeff to paste it into the conversation as plain text if a more secure input path exists in this environment; if none does, treat that as a signal to fall back to graceful degradation below rather than logging the password in the transcript).
+**Credential:** the SearchOps app password is never stored in this skill. Don't ask Jeff to paste it into chat. If it's read from a file, read it inside the shell and pipe it straight into the request; never echo, print or log it.
 
-**Dedup:** the endpoint dedupes on `(company, date, mode)` server-side — it's safe to re-POST a Doc that was already synced; you'll get back the existing `session_id` instead of a duplicate row. This makes it safe to just push every scoreable Doc found in STEP 1 each time this skill runs, without tracking sync state yourself.
+**Network:** test with an empty POST first. A 403 *from the proxy* at CONNECT means the domain isn't on the organization's network allowlist; it isn't a server problem.
 
-**Response:** `{"status": "success", "session_id": <int>}` on success. Non-200 means it failed — surface the failure in your STEP 2 scorecard output (don't silently drop it), but do not block presenting the scorecard on this succeeding.
+**Response:** `{"status": "success", "session_id": <int>}`. Report any non-200 in the scorecard output, but don't hold the scorecard back because of it.
 
 ---
 
@@ -192,46 +217,46 @@ Body:
 > b) Check if any of the recurring sharpen-points appear as open Todoist tasks already?
 > c) Flag the next scheduled interview in Google Calendar so I can prep you with this pattern in mind?"
 
-Only execute what Jeff says yes to.
+Only do what Jeff says yes to.
 
 ---
 
 ## GRACEFUL DEGRADATION
 
-| Missing | Behavior |
+| Situation | Behavior |
 |---------|---------|
-| Fewer than 3 Docs | Present what exists; note scorecard gains predictive value at 3+ |
-| Scores not in table format | Extract from text, flag as "manually parsed — verify" |
-| Google Drive MCP unavailable | Ask Jeff to paste the eval sections; aggregate manually |
-| A dimension is blank | Show as `—`; exclude from that dimension's average |
-| Cleaned transcript only | Score hedge density; note fillers not measurable |
-| **Partial recording** | Score it, but mark the column and say so in the trend read. Do not present it as like-for-like. |
-| **A debrief already exists for the call** | Reconcile, do not re-score from scratch. The earlier doc usually had context this run lacks. |
-| No HTTP-capable tool available in this session | Skip the SearchOps sync (STEP 2.5) silently for now; do not block STEP 2/3. Mention once per session: "Heads up — couldn't push to SearchOps this run, no HTTP tool available." |
-| SearchOps sync credential not available in this session | Same as above — skip, note it once, don't ask Jeff to paste the password into chat. |
-| SearchOps endpoint returns non-200 (server down, validation error, etc.) | Skip that Doc's sync, continue with the rest, note the failure count at the end (e.g. "2 of 5 calls synced to SearchOps; 3 failed — endpoint may be down"). |
-| Doc missing a required field for SearchOps sync (company or date unclear) | Skip sync for that Doc only; it still counts toward the scorecard in STEP 2. |
+| Data file unreachable | Say so and ask Jeff to connect the Interviews folder. Build the scorecard from Drive and the project folders only. |
+| Fewer than 3 Docs | Present what exists; note the scorecard gains predictive value at 3+. |
+| Scores not in table format | Extract from the text; flag as "manually parsed — verify." |
+| Google Drive MCP unavailable | Ask Jeff to paste the eval sections; aggregate manually. |
+| A dimension is blank | Show as `—`; exclude from that dimension's average. |
+| The interviewer asked Jeff almost nothing | Score question handling `—`, not a guessed 3. One soft question isn't a data point. State the judgment call. |
+| A line reads like an unanswered question | Read the surrounding lines first; an invitation isn't a missed question. |
+| Cleaned transcript only | Score hedge density; note that fillers can't be measured. |
+| Partially cleaned transcript | Score hedges; don't compare its raw filler count to fully raw calls. |
+| Partial recording | Score it, mark the column, and say so in the trend read. |
+| A debrief already exists | Reconcile; don't re-score from scratch. |
+| Hedge count near a band boundary | Run the sensitivity check and report both figures. |
+| Recording titled with the wrong name | Identify the other party from the content, tag it [Inference], and confirm with Jeff before writing any record. |
+| No HTTP-capable tool | Skip the SearchOps sync; mention it once per session. |
+| Endpoint blocked by the network proxy (403 at CONNECT) | Skip the sync; tell Jeff once that the SearchOps domain needs adding to the organization's allowlist. |
+| SearchOps credential unavailable | Skip the sync, mention it once, and don't ask Jeff to paste the password. |
+| SearchOps returns non-200 | Skip that call, continue with the rest, and report the failure count. |
+| Company or date unclear for a Doc | Skip the sync for that Doc only; it still counts in the scorecard. |
 
 ---
 
-## KNOWN DATA POINTS
-
-*Intentionally omitted from the public copy.* The working version of this skill
-carries a snapshot table of logged evals — per-dimension scores, transcript
-provenance, and the names of the people on each call. That is personal interview
-performance data about identifiable third parties, so it does not belong in a
-public repository.
-
-This costs the skill nothing. STEP 0 already states that Drive is the source of
-truth and that a scorecard must never be generated from the snapshot — the block
-is a convenience cache that has gone stale before. Running this skill against
-your own Drive rebuilds the table from scratch.
-
 ## CHANGELOG
+
+*Method changes only. Data-driven changes are logged in the data file.*
 
 | Date | Change |
 |------|--------|
-| 2026-06-24 | v1.0 — created. Prereq met: 3 full-rubric evals in Drive. |
-| 2026-07-15 | v1.1 — Replaced Dimension 6 "executive presence" with "Verbal discipline (tic density)". |
-| 2026-08-10 | v1.2 — **Added STEP 0: Drive is the source of truth.** The v1.1 snapshot had gone three calls stale and would have produced a wrong scorecard. Added the project-folder check after a panel was scored twice by parallel sessions, producing two conflicting records. Split Dimension 6 into a scored hedge metric and a logged raw-filler metric, since applying cleaned-transcript bands to raw counts understates by ~2 bands. Refreshed KNOWN DATA POINTS to 8 calls with transcript provenance and partial-recording flags. Recorded that the four legacy asterisked scores are permanently un-derivable — no raw transcript exists before 07-16. Added "leading with the handicap" as the top recurring defect. |
-| 2026-08-12 | v1.3 — **Added STEP 2.5: pushes each scoreable call to SearchOps** (`recruiting-engine`) via `POST /api/sync/interview-session`, the Google Drive Bridge sync mechanism decided in `docs/outcome-charter-interview-sync.md`. Bearer-token auth, server-side dedup on (company, date, mode). `self_eval_scores` field updated to `verbal_discipline` to match the v1.1 Dimension 6 redefinition. Graceful degradation rows added for missing HTTP tool, missing credential, non-200 response, and missing required fields. Merged forward from a local-only v1.1 draft that had branched from cloud before the v1.1/v1.2 tic-density and Drive-source-of-truth work landed — this merge reconciles both lineages onto one file. |
+| 2026-06-24 | v1.0 — created. |
+| 2026-07-15 | v1.1 — Dimension 6 changed from "executive presence" to "verbal discipline (tic density)." |
+| 2026-08-10 | v1.2 — Drive as source of truth; project-folder check; scored hedge metric split from logged raw-filler metric. |
+| 2026-08-12 | v1.3 — SearchOps sync (STEP 2.5) with dedup and degradation rows. |
+| 2026-09-09 | v1.4 — Founder catch-ups count as scoreable; self-ruleouts moved to exclusions; validation closers counted; "partially cleaned" provenance; band-boundary sensitivity check; `—` for question handling when almost nothing was asked. |
+| 2026-09-24 | v1.5 — New apology tic; quoted-voice "just" excluded; mislabeled-recording row. |
+| 2026-09-25 | v1.6 — Read-the-surrounding-lines rule; evidence coaching sized to the target company; correction-Doc check; egress-proxy row; never echo a secret read from a file. |
+| 2026-09-25 | v1.7 — **Made company-agnostic.** v1.5–v1.6 had written company names, people, paths and one company's rulings into the method. The call history, snapshot, pattern and company-specific rulings now live in the data file (`Interviews/interview-scorecard-data.md`); the skill reads it at the start of each run and updates it at the end. |
