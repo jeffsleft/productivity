@@ -125,7 +125,6 @@ For .docx, .pdf, .pptx and .xlsx files, use Anthropic's built-in file skills; th
 |-------|-------------|
 | [meeting-intelligence](skills/meeting-intelligence/) | Full meeting lifecycle — prep, rehearsal, note capture, synthesis, self-eval |
 | [interview-scorecard](skills/interview-scorecard/) | Trend interview self-eval scores across calls |
-| [meeting-task-extract](skills/meeting-task-extract/) | Pull decisions and action items from any text and route them to Todoist |
 | [open-loop-sweep](skills/open-loop-sweep/) | Find dropped commitments and prepped-but-never-synthesized meetings |
 | [searchops-pulse](skills/searchops-pulse/) | Job-search pipeline pulse block for the weekly review |
 
@@ -133,10 +132,6 @@ For .docx, .pdf, .pptx and .xlsx files, use Anthropic's built-in file skills; th
 | Skill | Description |
 |-------|-------------|
 | [define-done](skills/define-done/) | Outcome Definition Process (ODF) for new projects |
-| [schedule](skills/schedule/) | Create and manage scheduled remote agents |
-| [doc-coauthoring](skills/doc-coauthoring/) | Structured co-authoring workflow |
-| [setup-cowork](skills/setup-cowork/) | Configure Claude Cowork with role-matched plugins |
-| [consolidate-memory](skills/consolidate-memory/) | Merge duplicate memory files, fix stale facts |
 | [skill-audit](skills/skill-audit/) | Find repeated prompts worth a skill, and skills worth updating or retiring |
 
 **voice-engine** lives in its own private repository (`jeffsleft/voice-engine`) with its corpus and subagents; it is no longer copied here.
@@ -147,6 +142,8 @@ The eleven investing skills (`analyze-portfolio`, `analyze-stock`, `ceo-score`,
 `add-source`, `smart-money`, `goal-status`, `journal`, `patterns`, `retrospective`,
 `stress`, `tax-advisor`) moved to [`skills/_archive/`](skills/_archive/) on 2026-08-20.
 They are kept for reference and are not maintained.
+
+`meeting-task-extract` moved to the archive on 2026-10-13; its job is done by the synthesis step of `meeting-intelligence`.
 
 | Skill | Description |
 |-------|-------------|
