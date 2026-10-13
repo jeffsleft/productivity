@@ -51,7 +51,6 @@ Skills are slash commands (`/skill-name`). Two formats:
 | [draft-blog-post](skills/draft-blog-post/) | Draft posts for jeffreybeaumont.com from voice memos, notes, or briefs |
 | [public-writing](skills/public-writing/) | Voice and style review for public-facing content |
 | [internal-writing](skills/internal-writing/) | Mercy Ships / leadership internal communication standards |
-| [article-rewrite](skills/article-rewrite/) | Rewrite generic drafts with specific voice |
 | [seo-aeo-audit](skills/seo-aeo-audit/) | SEO and AEO audit for blog content |
 | [storybrand](skills/storybrand/) | StoryBrand framework for messaging and positioning |
 | [hemingway](skills/hemingway/) | Persistent plain-style writing mode — short declarative sentences, no filler |
@@ -126,7 +125,6 @@ For .docx, .pdf, .pptx and .xlsx files, use Anthropic's built-in file skills; th
 | [meeting-intelligence](skills/meeting-intelligence/) | Full meeting lifecycle — prep, rehearsal, note capture, synthesis, self-eval |
 | [interview-scorecard](skills/interview-scorecard/) | Trend interview self-eval scores across calls |
 | [open-loop-sweep](skills/open-loop-sweep/) | Find dropped commitments and prepped-but-never-synthesized meetings |
-| [searchops-pulse](skills/searchops-pulse/) | Job-search pipeline pulse block for the weekly review |
 
 ### Project & Memory Management
 | Skill | Description |
@@ -144,6 +142,7 @@ The eleven investing skills (`analyze-portfolio`, `analyze-stock`, `ceo-score`,
 They are kept for reference and are not maintained.
 
 `meeting-task-extract` moved to the archive on 2026-10-13; its job is done by the synthesis step of `meeting-intelligence`.
+`searchops-pulse` and `article-rewrite` moved to the archive on 2026-10-13: the weekly review deliberately has no job-search tracking skill, and rewrites go through voice-engine.
 
 | Skill | Description |
 |-------|-------------|
